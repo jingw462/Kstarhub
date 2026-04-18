@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>K-Star Hub · 管理后台</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Segoe UI", sans-serif;
+    background: #f6f7fb;
+    color: #1f2937;
+    padding: 20px;
+  }
+  h1 {
+    font-size: 22px;
+    margin-bottom: 4px;
+    background: linear-gradient(120deg, #ff6fb5, #8a5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .sub { color: #6b7280; font-size: 13px; margin-bottom: 20px; }
+
+  .container {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 420px 1fr; gap: 20px;
+  }
+  @media (max-width: 900px) { .container { grid-template-columns: 1fr; } }
+
+  .card {
+    background: #fff; padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .card h2 { font-size: 15px; margin-bottom: 14px; color: #374151; }
+
+  label {
+    display: block;
+    font-size: 12px; font-weight: 600;
+    color: #4b5563;
+    margin-bottom: 4px; margin-top: 10px;
+  }
+  input, select, textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 13px;
+    background: #f9fafb;
+    font-family: inherit;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: none; border-color: #8a5cf6; background: #fff;
+  }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  button {
+    padding: 10px 16px;
+    border: none; border-radius: 8px;
+    font-size: 13px; font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s;
+  }
+  button:active { transform: scale(0.96); }
+  .btn-primary {
+    background: linear-gradient(120deg, #ff6fb5, #8a5cf6);
+    color: #fff;
+    width: 100%;
+    margin-top: 14px;
+  }
+  .btn-danger {
+    background: #fee2e2; color: #b91c1c;
+    padding: 4px 10px; font-size: 11px;
+  }
+  .btn-export {
+    background: #ecfdf5; color: #047857;
+    padding: 6px 12px; font-size: 12px;
+    margin-left: 8px;
+  }
+
+  table {
+    width: 100%; border-collapse: collapse;
+    font-size: 12px;
+  }
+  th {
+    text-align: left; padding: 8px;
+    background: #f3f4f6; font-weight: 600;
+    color: #374151;
+  }
+  td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #f3f4f6;
+    vertical-align: middle;
+  }
+  tr:hover td { background: #fafbfc; }
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-size: 10px; font-weight: 600;
+    text-transform: uppercase;
+  }
+  .tag.comeback { background: #fce7f3; color: #9d174d; }
+  .tag.concert  { background: #ede9fe; color: #5b21b6; }
+  .tag.festival { background: #fef3c7; color: #92400e; }
+  .tag.fanmeet  { background: #d1fae5; color: #065f46; }
+
+  .toolbar {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 12px;
+    flex-wrap: wrap; gap: 10px;
+  }
+  .search {
+    flex: 1; min-width: 200px;
+    padding: 8px 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 12px;
+  }
+
+  .count-badge {
+    display: inline-block;
+    background: #eef2ff; color: #4338ca;
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-size: 11px; font-weight: 600;
+  }
+
+  .empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: #9ca3af;
+    font-size: 13px;
+  }
+</style>
+</head>
+<body>
+
+<h1>K-Star Hub · 管理后台</h1>
+<div class="sub">录入和管理回归/演唱会/音乐节/Fan Meet 日程 · 数据存在浏览器本地（localStorage 演示版）</div>
+
+<div class="container">
+
+  <!-- Left: add / edit form -->
+  <div class="card">
+    <h2 id="form-title">➕ 新增日程</h2>
+
+    <label>团体 *</label>
+    <select id="f-group"></select>
+
+    <label>类型 *</label>
+    <select id="f-type">
+      <option value="comeback">💿 回归 Comeback</option>
+      <option value="concert">🎤 演唱会 Concert</option>
+      <option value="festival">🎪 音乐节 Festival</option>
+      <option value="fanmeet">💌 Fan Meeting</option>
+    </select>
+
+    <label>标题 *</label>
+    <input id="f-title" placeholder='例如：3rd EP "We on Fire"'>
+
+    <div class="row">
+      <div>
+        <label>日期 *</label>
+        <input id="f-date" type="date">
+      </div>
+      <div>
+        <label>时间 (KST)</label>
+        <input id="f-time" placeholder="18:00" value="18:00">
+      </div>
+    </div>
+
+    <label>地点 / 平台</label>
+    <input id="f-location" placeholder="例如：高尺天空巨蛋 或 音源全球上线">
+
+    <label>开票时间（可选）</label>
+    <input id="f-ticket" placeholder="例如：2026/05/01 10:00 KST">
+
+    <label>备注 / 来源链接</label>
+    <textarea id="f-note" rows="2" placeholder="数据来源 URL 或其他备注"></textarea>
+
+    <label style="display:flex;align-items:center;gap:6px;margin-top:14px;cursor:pointer;">
+      <input type="checkbox" id="f-hot" style="width:auto;margin:0;">
+      <span style="font-size:13px;color:#4b5563;">🔥 标记为"本周热门"</span>
+    </label>
+
+    <button class="btn-primary" id="btn-save">💾 保存日程</button>
+    <button class="btn-primary" id="btn-cancel" style="background:#e5e7eb;color:#374151;margin-top:8px;display:none;">取消编辑</button>
+  </div>
+
+  <!-- Right: list -->
+  <div class="card">
+    <div class="toolbar">
+      <div>
+        <strong style="font-size:15px;">📋 日程列表</strong>
+        <span class="count-badge" id="count">0 条</span>
+        <button class="btn-export" onclick="exportJSON()">⬇️ 导出 JSON</button>
+        <button class="btn-export" onclick="importJSON()" style="background:#eff6ff;color:#1d4ed8;">⬆️ 导入</button>
+      </div>
+      <input class="search" id="search" placeholder="🔍 搜索团体 / 标题">
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:90px;">日期</th>
+          <th style="width:80px;">类型</th>
+          <th>团体 · 标题</th>
+          <th style="width:120px;">操作</th>
+        </tr>
+      </thead>
+      <tbody id="list-body"></tbody>
+    </table>
+    <div id="empty" class="empty" style="display:none;">
+      还没有任何日程 · 从左边开始录入吧
+    </div>
+  </div>
+
+</div>
+
+<input type="file" id="import-file" accept="application/json" style="display:none;">
+
+<script>
+// ====== 内置团体列表（与主站保持一致）======
+const groups = [
+  { id: 'bts', name: 'BTS' }, { id: 'bp', name: 'BLACKPINK' },
+  { id: 'nj', name: 'NewJeans' }, { id: 'aespa', name: 'aespa' },
+  { id: 'svt', name: 'SEVENTEEN' }, { id: 'skz', name: 'Stray Kids' },
+  { id: 'twice', name: 'TWICE' }, { id: 'ive', name: 'IVE' },
+  { id: 'lsrfm', name: 'LE SSERAFIM' }, { id: 'ateez', name: 'ATEEZ' },
+  { id: 'enh', name: 'ENHYPEN' }, { id: 'txt', name: 'TXT' },
+  { id: 'zb1', name: 'ZEROBASEONE' }, { id: 'itzy', name: 'ITZY' },
+  { id: 'bm', name: 'BABYMONSTER' }, { id: 'kol', name: 'KISS OF LIFE' },
+  { id: 'nct', name: 'NCT 127' }, { id: 'illit', name: 'ILLIT' },
+  { id: 'tr', name: 'TREASURE' }, { id: 'rv', name: 'Red Velvet' },
+  { id: 'mmm', name: 'MAMAMOO' }, { id: 'nmx', name: 'NMIXX' },
+  { id: 'p1h', name: 'P1Harmony' }, { id: 'atm', name: '&TEAM' },
+  { id: 'crv', name: 'Cravity' }, { id: 'bnd', name: 'BOYNEXTDOOR' },
+  { id: 'riize', name: 'RIIZE' }, { id: 'gidle', name: '(G)I-DLE' },
+  { id: 'exo', name: 'EXO' }, { id: 'ilt', name: 'izna' },
+  { id: 'kard', name: 'KARD' }, { id: 'akmu', name: 'AKMU' },
+];
+const typeNames = { comeback: '回归', concert: '演唱会', festival: '音乐节', fanmeet: 'Fan Meet' };
+
+// ====== 本地存储（localStorage）======
+const STORAGE_KEY = 'kstarhub_events';
+let events = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+let editingId = null;
+
+function save() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
+  render();
+}
+
+// ====== 渲染 ======
+function initForm() {
+  const sel = document.getElementById('f-group');
+  sel.innerHTML = groups.map(g => `<option value="${g.id}">${g.name}</option>`).join('');
+}
+
+function render() {
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  const sorted = [...events].sort((a, b) => new Date(a.date) - new Date(b.date));
+  const filtered = q
+    ? sorted.filter(e => {
+        const g = groups.find(x => x.id === e.groupId);
+        return (g && g.name.toLowerCase().includes(q)) || e.title.toLowerCase().includes(q);
+      })
+    : sorted;
+
+  document.getElementById('count').textContent = `${events.length} 条`;
+  document.getElementById('empty').style.display = filtered.length ? 'none' : 'block';
+
+  document.getElementById('list-body').innerHTML = filtered.map(e => {
+    const g = groups.find(x => x.id === e.groupId);
+    return `
+      <tr>
+        <td style="color:#6b7280;font-weight:600;">${e.date}</td>
+        <td><span class="tag ${e.type}">${typeNames[e.type]}</span></td>
+        <td>
+          <div style="font-weight:600;">${e.hot ? '🔥 ' : ''}${e.title}</div>
+          <div style="color:#9ca3af;font-size:11px;margin-top:2px;">
+            ${g ? g.name : '?'} · ${e.time || '-'} · ${e.location || '-'}
+          </div>
+        </td>
+        <td>
+          <button onclick="editEvent(${e.id})" style="background:#eff6ff;color:#1d4ed8;padding:4px 10px;font-size:11px;margin-right:4px;">编辑</button>
+          <button class="btn-danger" onclick="deleteEvent(${e.id})">删除</button>
+        </td>
+      </tr>`;
+  }).join('');
+}
+
+// ====== 表单操作 ======
+function readForm() {
+  return {
+    groupId:  document.getElementById('f-group').value,
+    type:     document.getElementById('f-type').value,
+    title:    document.getElementById('f-title').value.trim(),
+    date:     document.getElementById('f-date').value,
+    time:     document.getElementById('f-time').value.trim(),
+    location: document.getElementById('f-location').value.trim(),
+    ticket:   document.getElementById('f-ticket').value.trim(),
+    note:     document.getElementById('f-note').value.trim(),
+    hot:      document.getElementById('f-hot').checked,
+  };
+}
+
+function resetForm() {
+  document.getElementById('f-title').value = '';
+  document.getElementById('f-date').value = '';
+  document.getElementById('f-time').value = '18:00';
+  document.getElementById('f-location').value = '';
+  document.getElementById('f-ticket').value = '';
+  document.getElementById('f-note').value = '';
+  document.getElementById('f-hot').checked = false;
+  document.getElementById('form-title').textContent = '➕ 新增日程';
+  document.getElementById('btn-save').textContent = '💾 保存日程';
+  document.getElementById('btn-cancel').style.display = 'none';
+  editingId = null;
+}
+
+document.getElementById('btn-save').onclick = () => {
+  const data = readForm();
+  if (!data.title || !data.date) {
+    alert('请填写标题和日期');
+    return;
+  }
+  if (editingId) {
+    const idx = events.findIndex(e => e.id === editingId);
+    events[idx] = { ...events[idx], ...data };
+  } else {
+    const id = Math.max(0, ...events.map(e => e.id)) + 1;
+    events.push({ id, ...data });
+  }
+  resetForm();
+  save();
+};
+
+document.getElementById('btn-cancel').onclick = resetForm;
+
+window.editEvent = function(id) {
+  const e = events.find(x => x.id === id);
+  if (!e) return;
+  document.getElementById('f-group').value = e.groupId;
+  document.getElementById('f-type').value = e.type;
+  document.getElementById('f-title').value = e.title;
+  document.getElementById('f-date').value = e.date;
+  document.getElementById('f-time').value = e.time || '';
+  document.getElementById('f-location').value = e.location || '';
+  document.getElementById('f-ticket').value = e.ticket || '';
+  document.getElementById('f-note').value = e.note || '';
+  document.getElementById('f-hot').checked = !!e.hot;
+  document.getElementById('form-title').textContent = '✏️ 编辑日程';
+  document.getElementById('btn-save').textContent = '💾 保存修改';
+  document.getElementById('btn-cancel').style.display = 'block';
+  editingId = id;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+window.deleteEvent = function(id) {
+  if (!confirm('确定删除这条日程吗？')) return;
+  events = events.filter(e => e.id !== id);
+  save();
+};
+
+document.getElementById('search').oninput = render;
+
+// ====== 导入导出 JSON ======
+function exportJSON() {
+  const blob = new Blob([JSON.stringify(events, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `kstarhub_events_${new Date().toISOString().slice(0, 10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importJSON() {
+  document.getElementById('import-file').click();
+}
+
+document.getElementById('import-file').onchange = (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const data = JSON.parse(ev.target.result);
+      if (!Array.isArray(data)) throw new Error('格式错误');
+      if (!confirm(`将导入 ${data.length} 条日程，确定继续？（会替换当前数据）`)) return;
+      events = data;
+      save();
+    } catch (err) {
+      alert('导入失败：' + err.message);
+    }
+  };
+  reader.readAsText(file);
+};
+
+// ====== 初始化 ======
+initForm();
+render();
+</script>
+
+</body>
+</html>

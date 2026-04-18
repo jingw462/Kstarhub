@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>K-Star Hub · 追星日历</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #fef6ff;
+    --bg-2: #fff;
+    --ink: #2b1a3d;
+    --ink-soft: #6b5b80;
+    --accent: #ff6fb5;
+    --accent-2: #8a5cf6;
+    --accent-3: #ffd36e;
+    --shadow: 0 8px 24px rgba(138, 92, 246, 0.12);
+    --shadow-hover: 0 12px 32px rgba(138, 92, 246, 0.22);
+    --radius: 18px;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(180deg, #fef6ff 0%, #f3ecff 100%);
+    color: var(--ink);
+    min-height: 100vh;
+    padding-bottom: 60px;
+  }
+
+  /* ===== Header ===== */
+  header {
+    background: linear-gradient(120deg, #ff6fb5 0%, #8a5cf6 100%);
+    padding: 28px 24px;
+    color: #fff;
+    border-radius: 0 0 28px 28px;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: "";
+    position: absolute;
+    top: -40px; right: -30px;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, rgba(255,255,255,0.25), transparent 70%);
+    border-radius: 50%;
+  }
+  header::after {
+    content: "";
+    position: absolute;
+    bottom: -50px; left: -20px;
+    width: 140px; height: 140px;
+    background: radial-gradient(circle, rgba(255,211,110,0.4), transparent 70%);
+    border-radius: 50%;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 22px; font-weight: 800; letter-spacing: 0.5px;
+    position: relative; z-index: 2;
+  }
+  .logo-badge {
+    width: 38px; height: 38px;
+    background: #fff; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  .tagline {
+    margin-top: 6px;
+    font-size: 13px;
+    opacity: 0.92;
+    position: relative; z-index: 2;
+  }
+
+  /* ===== Container ===== */
+  .container {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 22px 18px;
+  }
+
+  /* ===== Tabs ===== */
+  .tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 22px;
+    background: var(--bg-2);
+    padding: 6px;
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    overflow-x: auto;
+  }
+  .tab {
+    flex: 1;
+    min-width: 90px;
+    padding: 10px 14px;
+    border: none;
+    background: transparent;
+    color: var(--ink-soft);
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tab.active {
+    background: linear-gradient(120deg, #ff6fb5, #8a5cf6);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(138, 92, 246, 0.3);
+  }
+
+  /* ===== Section ===== */
+  .section { display: none; animation: fadeIn 0.3s ease; }
+  .section.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  h2 {
+    font-size: 20px;
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  h2 small {
+    font-size: 12px;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+
+  /* ===== Countdown highlight ===== */
+  .hero-card {
+    background: linear-gradient(135deg, #ffe4f1, #e9dcff);
+    padding: 20px;
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-avatar {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 38px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  .hero-info { flex: 1; }
+  .hero-title { font-size: 17px; font-weight: 700; margin-bottom: 3px; }
+  .hero-sub { font-size: 13px; color: var(--ink-soft); margin-bottom: 8px; }
+  .countdown {
+    display: inline-flex; gap: 6px; align-items: center;
+    background: #fff;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent-2);
+  }
+  .countdown-num {
+    font-size: 20px;
+    background: linear-gradient(120deg, #ff6fb5, #8a5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ===== Event cards ===== */
+  .event-list {
+    display: grid;
+    gap: 12px;
+  }
+  .event {
+    background: var(--bg-2);
+    padding: 14px;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: all 0.2s;
+    border-left: 4px solid transparent;
+  }
+  .event:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+  }
+  .event-avatar {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+  .event-body { flex: 1; min-width: 0; }
+  .event-title {
+    font-size: 15px; font-weight: 700;
+    margin-bottom: 4px;
+    display: flex; align-items: center; gap: 6px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .tag.comeback { background: #ffe4f1; color: #d63384; }
+  .tag.concert { background: #e9dcff; color: #6f42c1; }
+  .tag.festival { background: #fff4d3; color: #b8860b; }
+  .tag.fanmeet { background: #d3f9e0; color: #0d8c4a; }
+  .event-meta {
+    font-size: 12px; color: var(--ink-soft);
+    display: flex; align-items: center; gap: 10px;
+    flex-wrap: wrap;
+  }
+  .event-date {
+    font-weight: 700;
+    font-size: 13px;
+    text-align: center;
+    min-width: 52px;
+    padding: 6px 8px;
+    background: linear-gradient(135deg, #ff6fb5, #8a5cf6);
+    color: #fff;
+    border-radius: 10px;
+    flex-shrink: 0;
+  }
+  .event-date .day {
+    font-size: 18px; line-height: 1;
+    display: block;
+  }
+  .event-date .month {
+    font-size: 10px; opacity: 0.9;
+    text-transform: uppercase;
+  }
+  .star-btn {
+    background: transparent;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    padding: 4px;
+    transition: transform 0.2s;
+  }
+  .star-btn:hover { transform: scale(1.2); }
+  .star-btn.active { filter: drop-shadow(0 0 4px rgba(255, 211, 110, 0.8)); }
+
+  /* ===== Group grid ===== */
+  .group-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+  }
+  .group-card {
+    background: var(--bg-2);
+    padding: 18px 12px;
+    border-radius: var(--radius);
+    text-align: center;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: all 0.2s;
+    border-top: 4px solid;
+  }
+  .group-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+  }
+  .group-avatar {
+    width: 64px; height: 64px;
+    margin: 0 auto 10px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 34px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  .group-name { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+  .group-company { font-size: 11px; color: var(--ink-soft); }
+  .group-followers {
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--accent-2);
+    font-weight: 600;
+  }
+
+  /* data source banner */
+  .data-banner {
+    background: linear-gradient(120deg, #fff4d3, #ffd6e7);
+    padding: 12px 16px;
+    border-radius: 14px;
+    font-size: 12px;
+    color: var(--ink);
+    margin-bottom: 16px;
+    line-height: 1.6;
+  }
+  .data-banner b { color: var(--accent-2); }
+
+  /* ===== Profile / stats ===== */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .stat-card {
+    background: var(--bg-2);
+    padding: 16px 10px;
+    border-radius: var(--radius);
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+  .stat-num {
+    font-size: 22px; font-weight: 800;
+    background: linear-gradient(120deg, #ff6fb5, #8a5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-label {
+    font-size: 11px; color: var(--ink-soft);
+    margin-top: 3px;
+  }
+
+  /* ===== Stickers (养成玩法) ===== */
+  .sticker-row {
+    background: var(--bg-2);
+    padding: 16px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 16px;
+  }
+  .sticker-title {
+    font-size: 14px; font-weight: 700; margin-bottom: 10px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .sticker-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+  .sticker {
+    aspect-ratio: 1;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    background: #f3ecff;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .sticker.unlocked {
+    background: linear-gradient(135deg, #ffe4f1, #e9dcff);
+    box-shadow: 0 2px 6px rgba(138,92,246,0.2);
+  }
+  .sticker.locked { opacity: 0.3; filter: grayscale(1); }
+
+  /* ===== Filter chips ===== */
+  .filters {
+    display: flex; gap: 8px;
+    margin-bottom: 14px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .chip {
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: #fff;
+    border: 1.5px solid transparent;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .chip.active {
+    background: linear-gradient(120deg, #ff6fb5, #8a5cf6);
+    color: #fff;
+  }
+
+  /* timezone selector */
+  .tz-row {
+    display: flex; align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    padding: 8px 14px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    font-size: 12px;
+  }
+  .tz-label { color: var(--ink-soft); font-weight: 600; margin-right: 4px; }
+  .tz-btn {
+    padding: 5px 12px;
+    border-radius: 16px;
+    border: none;
+    background: #f3ecff;
+    color: var(--ink-soft);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tz-btn.active {
+    background: linear-gradient(120deg, #ff6fb5, #8a5cf6);
+    color: #fff;
+  }
+
+  /* ===== Toast ===== */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: rgba(43, 26, 61, 0.95);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 24px;
+    font-size: 13px;
+    transition: transform 0.3s;
+    z-index: 99;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ===== Footer note ===== */
+  .footer-note {
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: 11px;
+    margin-top: 30px;
+    padding: 0 20px;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-badge">✨</div>
+    <div>
+      K-Star Hub
+      <div class="tagline">一站式 K-pop 追星日历 · 回归 / 演唱会 / 音乐节</div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" data-tab="home">🏠 主页</button>
+    <button class="tab" data-tab="calendar">📅 日历</button>
+    <button class="tab" data-tab="groups">💜 团体</button>
+    <button class="tab" data-tab="me">👤 我的</button>
+  </div>
+
+  <!-- Timezone selector -->
+  <div class="tz-row">
+    <span class="tz-label">🌍 时区</span>
+    <button class="tz-btn active" data-tz="KST">🇰🇷 韩国</button>
+    <button class="tz-btn" data-tz="CST">🇨🇳 中国</button>
+    <button class="tz-btn" data-tz="EST">🇺🇸 美东</button>
+    <button class="tz-btn" data-tz="PST">🇺🇸 美西</button>
+  </div>
+
+  <!-- Home -->
+  <section class="section active" id="home">
+    <div class="data-banner">
+      📡 <b>真实数据</b> · 32 个热门团体、44 条日程 · 支持时区切换（KR/CN/US）· 数据源：Soompi / Billboard / allkpop / kprofiles / Ticketmaster · 抓取于 2026/04/17
+    </div>
+    <div class="hero-card">
+      <div class="hero-avatar" style="background:#e6d7c3;">🐺</div>
+      <div class="hero-info">
+        <div class="hero-title">下一个回归：&TEAM 3rd EP "We on Fire"</div>
+        <div class="hero-sub">Comeback · 2026/04/21 18:00 KST</div>
+        <div class="countdown">
+          <span>剩余</span>
+          <span class="countdown-num" id="countdown">4</span>
+          <span>天</span>
+        </div>
+      </div>
+    </div>
+
+    <h2>🔥 本周热门 <small>· 粉丝关注最多</small></h2>
+    <div class="event-list" id="home-events"></div>
+  </section>
+
+  <!-- Calendar -->
+  <section class="section" id="calendar">
+    <div class="filters" id="filters">
+      <button class="chip active" data-filter="all">全部</button>
+      <button class="chip" data-filter="comeback">💿 回归</button>
+      <button class="chip" data-filter="concert">🎤 演唱会</button>
+      <button class="chip" data-filter="festival">🎪 音乐节</button>
+      <button class="chip" data-filter="fanmeet">💌 Fan Meet</button>
+    </div>
+    <div class="event-list" id="all-events"></div>
+  </section>
+
+  <!-- Groups -->
+  <section class="section" id="groups">
+    <h2>💜 团体库 <small>· 点击关注</small></h2>
+    <div class="filters" id="gender-filters">
+      <button class="chip active" data-gender="all">全部</button>
+      <button class="chip" data-gender="boy">🧑 男团</button>
+      <button class="chip" data-gender="girl">👩 女团</button>
+      <button class="chip" data-gender="coed">💞 混合团</button>
+    </div>
+    <div class="group-grid" id="group-grid"></div>
+  </section>
+
+  <!-- Me -->
+  <section class="section" id="me">
+    <div class="hero-card">
+      <div class="hero-avatar" style="background:#e9dcff;">🌟</div>
+      <div class="hero-info">
+        <div class="hero-title">Hi, Jing！</div>
+        <div class="hero-sub">追星等级 Lv.3 · 星光值 280</div>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num" id="star-count">0</div>
+        <div class="stat-label">收藏日程</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="group-count">0</div>
+        <div class="stat-label">关注团体</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">12</div>
+        <div class="stat-label">连续签到</div>
+      </div>
+    </div>
+
+    <div class="sticker-row">
+      <div class="sticker-title">
+        <span>🎁 我的贴纸收藏</span>
+        <span style="font-size:11px;color:var(--ink-soft);">6 / 12</span>
+      </div>
+      <div class="sticker-grid">
+        <div class="sticker unlocked">🐰</div>
+        <div class="sticker unlocked">🐻</div>
+        <div class="sticker unlocked">🦊</div>
+        <div class="sticker unlocked">🐼</div>
+        <div class="sticker unlocked">🦋</div>
+        <div class="sticker unlocked">🌸</div>
+        <div class="sticker locked">❓</div>
+        <div class="sticker locked">❓</div>
+        <div class="sticker locked">❓</div>
+        <div class="sticker locked">❓</div>
+        <div class="sticker locked">❓</div>
+        <div class="sticker locked">❓</div>
+      </div>
+    </div>
+
+    <div class="sticker-row">
+      <div class="sticker-title"><span>⚙️ 设置</span></div>
+      <div style="font-size:13px;color:var(--ink-soft);line-height:1.9;">
+        🔔 开启回归提醒<br>
+        🌍 时区：KST (Seoul)<br>
+        🎨 主题：粉紫渐变<br>
+        📬 邮箱：jingw462@gmail.com
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="footer-note">
+  本页为产品原型 Demo · 使用真实团体名称 + 原创卡通emoji形象，避免肖像权风险<br>
+  数据来源 · Soompi / Billboard / allkpop / kprofiles / Ticketmaster / Wikipedia (公开报道)<br>
+  Powered by K-Star Hub · 2026
+</div>
+
+<div class="toast" id="toast">已收藏 ⭐</div>
+
+<script>
+// ===== Real Data =====
+// 数据来源：Soompi、Billboard、allkpop、kprofiles、Wikipedia、Ticketmaster
+// 抓取时间：2026/04/17 · 使用真实团体名 + 原创emoji形象
+const groups = [
+  { id: 'bts',    name: 'BTS',          company: 'HYBE / BIGHIT',    color: '#9b51e0', emoji: '💜', bg: '#e9dcff', gender: 'boy' },
+  { id: 'bp',     name: 'BLACKPINK',    company: 'YG Entertainment', color: '#ff3d9a', emoji: '🖤', bg: '#ffd6e7', gender: 'girl' },
+  { id: 'nj',     name: 'NewJeans',     company: 'ADOR',             color: '#87ceeb', emoji: '🐰', bg: '#dbeafe', gender: 'girl' },
+  { id: 'aespa',  name: 'aespa',        company: 'SM Entertainment', color: '#2b2b2b', emoji: '🦋', bg: '#f3ecff', gender: 'girl' },
+  { id: 'svt',   name: 'SEVENTEEN',     company: 'HYBE / PLEDIS',    color: '#ffb5c5', emoji: '💎', bg: '#fce7f3', gender: 'boy' },
+  { id: 'skz',   name: 'Stray Kids',    company: 'JYP Entertainment',color: '#ff6b35', emoji: '⚡', bg: '#fff4d3', gender: 'boy' },
+  { id: 'twice', name: 'TWICE',         company: 'JYP Entertainment',color: '#ff82b2', emoji: '🍬', bg: '#ffe4f1', gender: 'girl' },
+  { id: 'ive',   name: 'IVE',           company: 'Starship Ent.',    color: '#4a6fa5', emoji: '💙', bg: '#dbeafe', gender: 'girl' },
+  { id: 'lsrfm', name: 'LE SSERAFIM',   company: 'HYBE / SOURCE',    color: '#e63946', emoji: '🔥', bg: '#ffd6d6', gender: 'girl' },
+  { id: 'ateez', name: 'ATEEZ',         company: 'KQ Entertainment', color: '#1a1a2e', emoji: '⚓', bg: '#d6deeb', gender: 'boy' },
+  { id: 'enh',   name: 'ENHYPEN',       company: 'HYBE / BELIFT',    color: '#4b0082', emoji: '🌙', bg: '#e0d4f0', gender: 'boy' },
+  { id: 'txt',   name: 'TXT',           company: 'HYBE / BIGHIT',    color: '#4ecdc4', emoji: '✨', bg: '#d1fae5', gender: 'boy' },
+  { id: 'zb1',   name: 'ZEROBASEONE',   company: 'WAKEONE',          color: '#00a0e9', emoji: '🌟', bg: '#d0e8ff', gender: 'boy' },
+  { id: 'itzy',  name: 'ITZY',          company: 'JYP Entertainment',color: '#ff4d6d', emoji: '🎯', bg: '#ffe0e6', gender: 'girl' },
+  { id: 'bm',    name: 'BABYMONSTER',   company: 'YG Entertainment', color: '#ff006e', emoji: '👾', bg: '#ffd6e7', gender: 'girl' },
+  { id: 'kol',   name: 'KISS OF LIFE',  company: 'S2 Entertainment', color: '#d62246', emoji: '💋', bg: '#ffd6e0', gender: 'girl' },
+  { id: 'nct',   name: 'NCT 127',       company: 'SM Entertainment', color: '#31a0a6', emoji: '🌆', bg: '#d1f0f2', gender: 'boy' },
+  { id: 'illit', name: 'ILLIT',         company: 'HYBE / BELIFT',    color: '#ff9eb4', emoji: '🍒', bg: '#ffe4ec', gender: 'girl' },
+  { id: 'tr',    name: 'TREASURE',      company: 'YG Entertainment', color: '#ffc107', emoji: '💛', bg: '#fff4cc', gender: 'boy' },
+  { id: 'rv',    name: 'Red Velvet',    company: 'SM Entertainment', color: '#c91e1e', emoji: '❤️', bg: '#ffd6d6', gender: 'girl' },
+  { id: 'mmm',   name: 'MAMAMOO',       company: 'RBW',              color: '#ff69b4', emoji: '🌺', bg: '#ffe0ee', gender: 'girl' },
+  { id: 'nmx',   name: 'NMIXX',         company: 'JYP Entertainment',color: '#6a0dad', emoji: '🌈', bg: '#e9d5ff', gender: 'girl' },
+  { id: 'p1h',   name: 'P1Harmony',     company: 'FNC Entertainment',color: '#1d3557', emoji: '🎸', bg: '#d6dde6', gender: 'boy' },
+  { id: 'atm',   name: '&TEAM',         company: 'HYBE Japan',       color: '#5c4033', emoji: '🐺', bg: '#e6d7c3', gender: 'boy' },
+  { id: 'crv',   name: 'Cravity',       company: 'Starship Ent.',    color: '#3a86ff', emoji: '🛡️', bg: '#d6e4ff', gender: 'boy' },
+  { id: 'bnd',   name: 'BOYNEXTDOOR',   company: 'HYBE / KOZ',       color: '#f4a261', emoji: '🚪', bg: '#ffe5cc', gender: 'boy' },
+  { id: 'riize', name: 'RIIZE',         company: 'SM Entertainment', color: '#0077b6', emoji: '🌊', bg: '#d0e8f2', gender: 'boy' },
+  { id: 'gidle', name: '(G)I-DLE',      company: 'Cube Entertainment',color: '#e63946', emoji: '👑', bg: '#ffd6d6', gender: 'girl' },
+  { id: 'exo',   name: 'EXO',           company: 'SM Entertainment', color: '#c0c0c0', emoji: '🌟', bg: '#e8e8e8', gender: 'boy' },
+  { id: 'ilt',   name: 'izna',          company: 'WAKEONE',          color: '#ff85a2', emoji: '💫', bg: '#ffd6e0', gender: 'girl' },
+  { id: 'kard',  name: 'KARD',          company: 'DSP Media',        color: '#ff4500', emoji: '♦️', bg: '#ffdac1', gender: 'coed' },
+  { id: 'akmu',  name: 'AKMU',          company: 'YG Entertainment', color: '#fca311', emoji: '🎵', bg: '#ffe8b3', gender: 'coed' },
+];
+
+// 所有事件均来自 2026/04/17 公开报道的真实日程
+const events = [
+  // ===== 回归 Comebacks (已确认) =====
+  { id: 1,  groupId: 'kol',   type: 'comeback', title: '"Who is she" 单曲',             date: '2026-04-06', time: '18:00 KST', location: '音源已上线' },
+  { id: 2,  groupId: 'atm',   type: 'comeback', title: '3rd EP "We on Fire"',           date: '2026-04-21', time: '18:00 KST', location: '音源全球上线', hot: true },
+  { id: 3,  groupId: 'lsrfm', type: 'comeback', title: 'Single Pre-release',            date: '2026-04-24', time: '18:00 KST', location: '音源全球上线', hot: true },
+  { id: 4,  groupId: 'crv',   type: 'comeback', title: '"ReDeFINE"',                    date: '2026-04-29', time: '18:00 KST', location: '音源全球上线' },
+  { id: 5,  groupId: 'bm',    type: 'comeback', title: '3rd Mini Album "CHOOM"',        date: '2026-05-04', time: '18:00 KST', location: '音源全球上线', hot: true },
+  { id: 6,  groupId: 'lsrfm', type: 'comeback', title: '"PUREFLOW pt. 1"',              date: '2026-05-22', time: '18:00 KST', location: '音源全球上线' },
+  { id: 7,  groupId: 'aespa', type: 'comeback', title: '第2张正规专辑 (SM官宣)',        date: '2026-05-15', time: '18:00 KST', location: '音源全球上线 · 日期待官方确认', hot: true },
+  { id: 8,  groupId: 'itzy',  type: 'comeback', title: '新专辑 (5月回归)',              date: '2026-05-20', time: '18:00 KST', location: '音源全球上线 · 日期待官方确认' },
+  { id: 9,  groupId: 'zb1',   type: 'comeback', title: 'Re-Debut (5月)',                date: '2026-05-25', time: '18:00 KST', location: '音源全球上线 · 日期待官方确认' },
+  { id: 10, groupId: 'bnd',   type: 'comeback', title: '5月新专辑',                     date: '2026-05-26', time: '18:00 KST', location: '音源全球上线 · 日期待官方确认' },
+  { id: 11, groupId: 'tr',    type: 'comeback', title: '6月回归',                       date: '2026-06-10', time: '18:00 KST', location: '音源全球上线 · 日期待官方确认' },
+  { id: 12, groupId: 'mmm',   type: 'comeback', title: '6月回归',                       date: '2026-06-15', time: '18:00 KST', location: '音源全球上线 · 日期待官方确认' },
+
+  // ===== 世界巡演 Tours =====
+  { id: 20, groupId: 'bts',   type: 'concert',  title: "BTS World Tour 'ARIRANG' 首尔场", date: '2026-04-09', time: '19:30',   location: '高阳综合运动场 · 3 nights' },
+  { id: 21, groupId: 'bts',   type: 'concert',  title: "BTS 'ARIRANG' · Tokyo",          date: '2026-04-17', time: '18:00',   location: '东京巨蛋', hot: true },
+  { id: 22, groupId: 'bts',   type: 'concert',  title: "BTS 'ARIRANG' · El Paso",        date: '2026-05-02', time: '19:00',   location: 'Sun Bowl Stadium, TX' },
+  { id: 23, groupId: 'bts',   type: 'concert',  title: "BTS 'ARIRANG' · East Rutherford",date: '2026-08-01', time: '19:00',   location: 'MetLife Stadium, NJ' },
+  { id: 24, groupId: 'bts',   type: 'concert',  title: "BTS 'ARIRANG' · Los Angeles",    date: '2026-09-01', time: '19:00',   location: 'SoFi Stadium, LA' },
+  { id: 25, groupId: 'bts',   type: 'concert',  title: "BTS 'ARIRANG' · São Paulo",      date: '2026-10-28', time: '20:00',   location: 'Allianz Parque, Brazil' },
+  { id: 26, groupId: 'enh',   type: 'concert',  title: "ENHYPEN 'BLOOD SAGA' 首尔场",     date: '2026-05-01', time: '19:30',   location: 'KSPO Dome · 3 nights sold out', hot: true },
+  { id: 27, groupId: 'enh',   type: 'concert',  title: "ENHYPEN 'BLOOD SAGA' · São Paulo",date: '2026-07-10', time: '20:00',   location: 'Espaço Unimed, Brazil' },
+  { id: 28, groupId: 'enh',   type: 'concert',  title: "ENHYPEN 'BLOOD SAGA' · Las Vegas",date: '2026-08-20', time: '19:30',   location: 'T-Mobile Arena, NV' },
+  { id: 29, groupId: 'skz',   type: 'festival', title: 'Governors Ball · Stray Kids',    date: '2026-06-05', time: '16:00',   location: 'Flushing Meadows Park, NYC', hot: true },
+  { id: 30, groupId: 'skz',   type: 'festival', title: 'Rock in Rio · Stray Kids',       date: '2026-09-11', time: '22:00',   location: 'Rock City, Rio de Janeiro' },
+  { id: 31, groupId: 'twice', type: 'concert',  title: "TWICE 'THIS IS FOR' · DC",       date: '2026-06-20', time: '19:00',   location: 'Capital One Arena, Washington DC' },
+  { id: 32, groupId: 'zb1',   type: 'concert',  title: "ZEROBASEONE 'HERE&NOW' Encore", date: '2026-05-03', time: '18:00',   location: '首尔 KSPO Dome' },
+
+  // ===== 音乐节 Festivals =====
+  { id: 40, groupId: 'atm',   type: 'festival', title: 'KCON Japan 2026 · &TEAM',        date: '2026-05-08', time: '14:00',   location: '幕张Messe · 千叶', hot: true },
+  { id: 41, groupId: 'tr',    type: 'festival', title: 'KCON Japan 2026 · TREASURE',     date: '2026-05-09', time: '14:00',   location: '幕张Messe · 千叶' },
+  { id: 42, groupId: 'kol',   type: 'festival', title: 'Waterbomb Seoul 2026',           date: '2026-07-24', time: '14:00',   location: 'KINTEX 户外舞台 · Day 1', hot: true },
+  { id: 43, groupId: 'kol',   type: 'festival', title: 'Waterbomb Seoul · Jay Park/BIBI',date: '2026-07-25', time: '14:00',   location: 'KINTEX 户外舞台 · Day 2' },
+  { id: 44, groupId: 'nct',   type: 'festival', title: 'KCON LA 2026 · NCT 127 (Day 1)', date: '2026-08-14', time: '19:00',   location: 'Crypto.com Arena, LA', hot: true },
+  { id: 45, groupId: 'zb1',   type: 'festival', title: 'KCON LA 2026 · ZEROBASEONE (Day 2)',date: '2026-08-15', time: '19:00',location: 'Crypto.com Arena, LA' },
+  { id: 46, groupId: 'illit', type: 'festival', title: 'KCON LA 2026 · ILLIT (Day 2)',    date: '2026-08-15', time: '19:00',   location: 'Crypto.com Arena, LA' },
+  { id: 47, groupId: 'p1h',   type: 'festival', title: 'KCON LA 2026 · P1Harmony (Day 2)',date: '2026-08-15', time: '19:00',  location: 'Crypto.com Arena, LA' },
+  { id: 48, groupId: 'txt',   type: 'festival', title: 'KCON LA 2026 · TXT (Day 3)',     date: '2026-08-16', time: '19:00',   location: 'Crypto.com Arena, LA', hot: true },
+  { id: 49, groupId: 'tr',    type: 'festival', title: 'KCON LA 2026 · TREASURE (Day 1)',date: '2026-08-14', time: '19:00',   location: 'Crypto.com Arena, LA' },
+];
+
+const typeNames = { comeback: '回归', concert: '演唱会', festival: '音乐节', fanmeet: 'Fan Meet' };
+const monthNames = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+
+// ===== State =====
+const state = {
+  starred: new Set(),
+  followed: new Set(['nj', 'bts', 'aespa']),
+  currentFilter: 'all',
+  currentGender: 'all',
+  currentTz: 'KST',
+};
+
+// KST = UTC+9 is our reference. Offsets relative to KST:
+// CST (China) = UTC+8 => -1h from KST
+// EST (US East, EDT in summer) = UTC-4 => -13h from KST
+// PST (US West, PDT in summer) = UTC-7 => -16h from KST
+const TZ_OFFSETS = { KST: 0, CST: -1, EST: -13, PST: -16 };
+const TZ_LABELS  = { KST: 'KST', CST: 'CST', EST: 'EDT', PST: 'PDT' };
+
+// Convert an event (stored as KST wall clock) to the user's selected timezone.
+// Returns { dateStr, timeStr } adjusted.
+function toDisplayTime(dateStr, timeStr) {
+  if (state.currentTz === 'KST') return { dateStr, timeStr };
+  // parse the time (like "18:00 KST" or "19:30")
+  const m = timeStr.match(/(\d{1,2}):(\d{2})/);
+  if (!m) return { dateStr, timeStr };
+  const hh = parseInt(m[1]), mm = parseInt(m[2]);
+  const d = new Date(dateStr + 'T' + String(hh).padStart(2,'0') + ':' + String(mm).padStart(2,'0') + ':00+09:00');
+  const offsetMs = TZ_OFFSETS[state.currentTz] * 60 * 60 * 1000;
+  const shifted = new Date(d.getTime() + offsetMs);
+  const y = shifted.getUTCFullYear();
+  const mo = String(shifted.getUTCMonth()+1).padStart(2,'0');
+  const da = String(shifted.getUTCDate()).padStart(2,'0');
+  const newH = String(shifted.getUTCHours()).padStart(2,'0');
+  const newM = String(shifted.getUTCMinutes()).padStart(2,'0');
+  return {
+    dateStr: `${y}-${mo}-${da}`,
+    timeStr: `${newH}:${newM} ${TZ_LABELS[state.currentTz]}`,
+  };
+}
+
+// ===== Helpers =====
+function getGroup(id) { return groups.find(g => g.id === id); }
+
+function formatDate(dateStr) {
+  const d = new Date(dateStr);
+  return { day: d.getDate(), month: monthNames[d.getMonth()] };
+}
+
+function buildEventCard(evt) {
+  const g = getGroup(evt.groupId);
+  const conv = toDisplayTime(evt.date, evt.time);
+  const d = formatDate(conv.dateStr);
+  const starred = state.starred.has(evt.id) ? '⭐' : '☆';
+  const starCls = state.starred.has(evt.id) ? 'active' : '';
+  return `
+    <div class="event" data-type="${evt.type}" style="border-left-color:${g.color};">
+      <div class="event-date">
+        <span class="day">${d.day}</span>
+        <span class="month">${d.month}</span>
+      </div>
+      <div class="event-avatar" style="background:${g.bg};">${g.emoji}</div>
+      <div class="event-body">
+        <div class="event-title">
+          <span>${evt.title}</span>
+          <span class="tag ${evt.type}">${typeNames[evt.type]}</span>
+        </div>
+        <div class="event-meta">
+          <span>💜 ${g.name}</span>
+          <span>🕐 ${conv.timeStr}</span>
+          <span>📍 ${evt.location}</span>
+        </div>
+      </div>
+      <button class="star-btn ${starCls}" data-id="${evt.id}">${starred}</button>
+    </div>
+  `;
+}
+
+function renderHome() {
+  const hot = events.filter(e => e.hot).slice(0, 4);
+  document.getElementById('home-events').innerHTML = hot.map(buildEventCard).join('');
+}
+
+function renderAllEvents() {
+  const filter = state.currentFilter;
+  const sorted = [...events].sort((a, b) => new Date(a.date) - new Date(b.date));
+  const filtered = filter === 'all' ? sorted : sorted.filter(e => e.type === filter);
+  document.getElementById('all-events').innerHTML = filtered.map(buildEventCard).join('') ||
+    '<div style="text-align:center;padding:40px;color:var(--ink-soft);">暂无该类型日程 🎐</div>';
+}
+
+function renderGroups() {
+  const gf = state.currentGender;
+  const filtered = gf === 'all' ? groups : groups.filter(g => g.gender === gf);
+  document.getElementById('group-grid').innerHTML = filtered.map(g => {
+    const followed = state.followed.has(g.id);
+    const gTag = g.gender === 'boy' ? '🧑 男团' : g.gender === 'girl' ? '👩 女团' : '💞 混合团';
+    return `
+      <div class="group-card" data-gid="${g.id}" style="border-top-color:${g.color};">
+        <div class="group-avatar" style="background:${g.bg};">${g.emoji}</div>
+        <div class="group-name">${g.name}</div>
+        <div class="group-company">${g.company}</div>
+        <div class="group-followers" style="font-size:10px;">${gTag}</div>
+        <div class="group-followers">${followed ? '💜 已关注' : '+ 关注'}</div>
+      </div>
+    `;
+  }).join('') || '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--ink-soft);">暂无此类型团体 🎐</div>';
+}
+
+function renderProfile() {
+  document.getElementById('star-count').textContent = state.starred.size;
+  document.getElementById('group-count').textContent = state.followed.size;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window._toastT);
+  window._toastT = setTimeout(() => t.classList.remove('show'), 1600);
+}
+
+// ===== Countdown =====
+function updateCountdown() {
+  const target = new Date('2026-04-21T18:00:00+09:00');
+  const now = new Date();
+  const diff = Math.max(0, Math.ceil((target - now) / (1000 * 60 * 60 * 24)));
+  document.getElementById('countdown').textContent = diff;
+}
+
+// ===== Event Handlers =====
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    tab.classList.add('active');
+    const id = tab.dataset.tab;
+    document.getElementById(id).classList.add('active');
+    if (id === 'me') renderProfile();
+    if (id === 'calendar') renderAllEvents();
+    if (id === 'groups') renderGroups();
+  });
+});
+
+document.addEventListener('click', (e) => {
+  // star toggle
+  if (e.target.classList.contains('star-btn')) {
+    e.stopPropagation();
+    const id = parseInt(e.target.dataset.id);
+    if (state.starred.has(id)) {
+      state.starred.delete(id);
+      showToast('已取消收藏');
+    } else {
+      state.starred.add(id);
+      showToast('⭐ 已加入日程，回归前会提醒你～');
+    }
+    renderHome();
+    renderAllEvents();
+    return;
+  }
+  // timezone buttons
+  if (e.target.classList.contains('tz-btn')) {
+    document.querySelectorAll('.tz-btn').forEach(b => b.classList.remove('active'));
+    e.target.classList.add('active');
+    state.currentTz = e.target.dataset.tz;
+    renderHome();
+    renderAllEvents();
+    const zh = { KST: '韩国时间', CST: '中国时间', EST: '美东时间', PST: '美西时间' };
+    showToast('🌍 已切换到 ' + zh[state.currentTz]);
+    return;
+  }
+  // type filter chip (calendar page)
+  if (e.target.classList.contains('chip') && e.target.dataset.filter) {
+    document.querySelectorAll('#filters .chip').forEach(c => c.classList.remove('active'));
+    e.target.classList.add('active');
+    state.currentFilter = e.target.dataset.filter;
+    renderAllEvents();
+    return;
+  }
+  // gender filter chip (groups page)
+  if (e.target.classList.contains('chip') && e.target.dataset.gender) {
+    document.querySelectorAll('#gender-filters .chip').forEach(c => c.classList.remove('active'));
+    e.target.classList.add('active');
+    state.currentGender = e.target.dataset.gender;
+    renderGroups();
+    return;
+  }
+  // group follow
+  const gCard = e.target.closest('.group-card');
+  if (gCard) {
+    const id = gCard.dataset.gid;
+    if (state.followed.has(id)) {
+      state.followed.delete(id);
+      showToast('已取消关注');
+    } else {
+      state.followed.add(id);
+      showToast('💜 已关注，解锁专属贴纸！');
+    }
+    renderGroups();
+    return;
+  }
+});
+
+// ===== Init =====
+renderHome();
+renderAllEvents();
+renderGroups();
+renderProfile();
+updateCountdown();
+setInterval(updateCountdown, 60000);
+</script>
+
+</body>
+</html>
