@@ -333,6 +333,243 @@
     margin-top: 3px;
   }
 
+  /* ===== Level progress card ===== */
+  .level-card {
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+  }
+  .level-head {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .level-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--ink);
+    color: #fff;
+    padding: 5px 11px;
+    border-radius: 14px;
+    font-size: 12px;
+    font-weight: 800;
+  }
+  .level-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+    flex: 1;
+  }
+  .level-points {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--accent-2);
+  }
+  .level-bar {
+    height: 10px;
+    background: var(--bg-3);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 6px;
+    border: 1px solid var(--line);
+  }
+  .level-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    border-radius: 6px;
+    transition: width 0.6s cubic-bezier(.2,.9,.3,1);
+  }
+  .level-next {
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+  }
+  .level-next b { color: var(--accent-2); }
+  .level-ladder {
+    display: flex;
+    gap: 4px;
+    margin-top: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .ladder-step {
+    flex: 1;
+    min-width: 54px;
+    text-align: center;
+    padding: 6px 4px;
+    border-radius: 10px;
+    background: var(--bg-3);
+    font-size: 10px;
+    color: var(--ink-soft);
+    font-weight: 600;
+    opacity: 0.6;
+    white-space: nowrap;
+  }
+  .ladder-step.reached { opacity: 1; background: var(--accent-3); color: var(--ink); }
+  .ladder-step.current {
+    background: var(--ink);
+    color: #fff;
+    opacity: 1;
+    box-shadow: 0 2px 8px rgba(45,42,36,0.18);
+  }
+  .ladder-step .step-icon { font-size: 14px; display: block; margin-bottom: 2px; }
+  .ladder-step .step-lv { font-weight: 800; }
+
+  /* ===== Daily check-in card ===== */
+  .checkin-card {
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+  }
+  .checkin-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .checkin-title { font-size: 15px; font-weight: 700; }
+  .checkin-sub { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+  .checkin-sub b { color: var(--accent-2); font-size: 14px; }
+  .checkin-btn {
+    background: var(--ink);
+    color: #fff;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 22px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s, opacity 0.15s;
+  }
+  .checkin-btn:hover { transform: translateY(-1px); }
+  .checkin-btn.done {
+    background: var(--accent-3);
+    color: var(--ink-soft);
+    cursor: default;
+  }
+  .checkin-btn.done:hover { transform: none; }
+  .checkin-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+  }
+  .checkin-day {
+    aspect-ratio: 1;
+    border-radius: 10px;
+    background: var(--bg-3);
+    border: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--ink-soft);
+    font-weight: 600;
+    position: relative;
+  }
+  .checkin-day .day-reward { font-size: 10px; color: var(--accent-2); font-weight: 800; margin-top: 2px; }
+  .checkin-day.bonus .day-reward::after { content: ' 🎁'; }
+  .checkin-day.done {
+    background: var(--accent-3);
+    color: var(--ink);
+    border-color: transparent;
+  }
+  .checkin-day.done::before {
+    content: '✓';
+    position: absolute;
+    top: 3px; right: 6px;
+    font-size: 11px;
+    font-weight: 900;
+    color: var(--accent-2);
+  }
+  .checkin-day.today {
+    background: var(--ink);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 3px 10px rgba(45,42,36,0.2);
+  }
+  .checkin-day.today .day-reward { color: #f6e3c8; }
+
+  /* ===== Earn tips card ===== */
+  .earn-card {
+    background: var(--bg-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+  }
+  .earn-title { font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+  .earn-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 6px;
+    font-size: 12.5px;
+    color: var(--ink);
+  }
+  .earn-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .earn-list b { color: var(--accent-2); font-weight: 800; }
+
+  /* ===== Skin gallery ===== */
+  .skin-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 8px;
+  }
+  .skin-card {
+    border-radius: 12px;
+    padding: 10px 8px;
+    text-align: center;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.18s;
+    position: relative;
+    overflow: hidden;
+    min-height: 96px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  }
+  .skin-preview {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.6);
+    font-size: 22px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  .skin-name { font-size: 11px; font-weight: 700; }
+  .skin-card.locked { opacity: 0.55; cursor: not-allowed; filter: grayscale(0.4); }
+  .skin-card.locked .skin-lock {
+    font-size: 10px; color: var(--ink-soft); margin-top: 2px;
+  }
+  .skin-card.active {
+    border-color: var(--accent-2);
+    box-shadow: 0 0 0 2px rgba(196,160,122,0.35);
+  }
+  .skin-card.active::after {
+    content: '✓';
+    position: absolute;
+    top: 4px; right: 6px;
+    background: var(--accent-2);
+    color: #fff;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+  }
+
   /* ===== Stickers (养成玩法) ===== */
   .sticker-row {
     background: var(--bg-2);
@@ -984,11 +1221,53 @@
   <!-- Me -->
   <section class="section" id="me">
     <div class="hero-card">
-      <div class="hero-avatar" style="background:var(--accent-3);">🌟</div>
+      <div class="hero-avatar" id="me-avatar" style="background:var(--accent-3);">🌟</div>
       <div class="hero-info">
         <div class="hero-title" data-i18n="me_hi">Hi, Jing！</div>
-        <div class="hero-sub" data-i18n="me_level">追星等级 Lv.3 · 星光值 280</div>
+        <div class="hero-sub" id="me-level-line">追星等级 Lv.1 · 星光值 0</div>
       </div>
+    </div>
+
+    <!-- Level progress card -->
+    <div class="level-card">
+      <div class="level-head">
+        <div class="level-badge" id="level-badge">
+          <span id="level-icon">🌱</span>
+          <span>Lv.<span id="level-num">1</span></span>
+        </div>
+        <div class="level-name" id="level-name">新手粉</div>
+        <div class="level-points" id="level-points">0 ⭐</div>
+      </div>
+      <div class="level-bar">
+        <div class="level-bar-fill" id="level-bar-fill" style="width:0%"></div>
+      </div>
+      <div class="level-next" id="level-next">
+        <span data-i18n="lv_next_prefix">距离下一级还差</span> <b id="level-remaining">50</b> ⭐
+      </div>
+      <div class="level-ladder" id="level-ladder"></div>
+    </div>
+
+    <!-- Daily check-in card -->
+    <div class="checkin-card">
+      <div class="checkin-head">
+        <div>
+          <div class="checkin-title" data-i18n="checkin_title">🗓️ 每日签到</div>
+          <div class="checkin-sub" id="checkin-sub"><span data-i18n="checkin_streak_pre">已连续签到</span> <b id="streak-count">0</b> <span data-i18n="checkin_days">天</span></div>
+        </div>
+        <button class="checkin-btn" id="checkin-btn" data-i18n="checkin_btn">今日签到 +10</button>
+      </div>
+      <div class="checkin-grid" id="checkin-grid"></div>
+    </div>
+
+    <!-- Starlight earning tips -->
+    <div class="earn-card">
+      <div class="earn-title" data-i18n="earn_title">💡 如何赚星光值</div>
+      <ul class="earn-list">
+        <li><span data-i18n="earn_checkin">每日签到</span> <b>+10~50 ⭐</b></li>
+        <li><span data-i18n="earn_star">收藏一个日程</span> <b>+2 ⭐</b></li>
+        <li><span data-i18n="earn_follow">关注一个团体</span> <b>+5 ⭐</b></li>
+        <li><span data-i18n="earn_open">首次打开团体主页</span> <b>+1 ⭐</b></li>
+      </ul>
     </div>
 
     <div class="stats-grid">
@@ -1001,9 +1280,18 @@
         <div class="stat-label" data-i18n="stat_group">关注团体</div>
       </div>
       <div class="stat-card">
-        <div class="stat-num">12</div>
+        <div class="stat-num" id="streak-stat">0</div>
         <div class="stat-label" data-i18n="stat_streak">连续签到</div>
       </div>
+    </div>
+
+    <!-- Skin gallery -->
+    <div class="sticker-row">
+      <div class="sticker-title">
+        <span data-i18n="skin_title">🎨 主页皮肤</span>
+        <span style="font-size:11px;color:var(--ink-soft);" id="skin-unlock-count">1 / 5</span>
+      </div>
+      <div class="skin-grid" id="skin-grid"></div>
     </div>
 
     <div class="sticker-row">
@@ -1042,7 +1330,7 @@
 
 <div class="container" style="padding-top:0;">
   <div class="data-banner" data-i18n-html="banner">
-    📡 <b>真实数据</b> · 33 个热门团体、41 条日程 · 支持时区切换（KR/CN/US）· 数据源：Soompi / Billboard / allkpop / kprofiles / Ticketmaster · 更新于 2026/04/22
+    📡 <b>真实数据</b> · 33 个热门团体、41 条日程 · 支持时区切换（KR/CN/US）· 数据源：Soompi / Billboard / allkpop / kprofiles / Ticketmaster · 更新于 2026/04/21
   </div>
 </div>
 
@@ -1223,16 +1511,138 @@ const monthNames = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT',
 function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
 function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 
+// ===== Leveling system =====
+// Thresholds: 星光值 required to reach level N+1. Lv.6 is the top.
+const LEVEL_TIERS = [
+  { lv: 1, min: 0,    name_zh: '新手粉',   name_en: 'Rookie Fan',            icon: '🌱' },
+  { lv: 2, min: 50,   name_zh: '小迷妹',   name_en: 'Casual Fan',            icon: '🌷' },
+  { lv: 3, min: 150,  name_zh: '真爱粉',   name_en: 'True Fan',              icon: '💗' },
+  { lv: 4, min: 350,  name_zh: '死忠粉',   name_en: 'Stan',                  icon: '⭐' },
+  { lv: 5, min: 700,  name_zh: '骨灰粉',   name_en: 'Ultimate Stan',         icon: '👑' },
+  { lv: 6, min: 1400, name_zh: '星光大使', name_en: 'Starlight Ambassador',  icon: '✨' },
+];
+function getLevel(points) {
+  let cur = LEVEL_TIERS[0];
+  for (const t of LEVEL_TIERS) { if (points >= t.min) cur = t; }
+  const next = LEVEL_TIERS[cur.lv] || null; // LEVEL_TIERS is 0-indexed so [lv] = next
+  const progress = next ? (points - cur.min) / (next.min - cur.min) : 1;
+  return { ...cur, next, progress: Math.max(0, Math.min(1, progress)) };
+}
+
+// Daily check-in rewards (7-day cycle)
+const CHECKIN_REWARDS = [10, 12, 15, 20, 25, 30, 50];
+// Day-7 bonus: unlock a sticker (random from locked set)
+
+// ===== Skins =====
+// "default" is always unlocked; others require starlight to unlock.
+const SKINS = [
+  { id: 'paper',    name_zh: '米白简约',  name_en: 'Paper & Cream',  emoji: '📜', unlockAt: 0,
+    vars: { '--bg': '#f6f1e8', '--bg-2': '#ffffff', '--bg-3': '#faf5ec',
+            '--ink': '#2d2a24', '--ink-soft': '#8a8175',
+            '--accent': '#c4a07a', '--accent-2': '#a68968', '--accent-3': '#e9dcc4',
+            '--header-bg': '#efe7d6' } },
+  { id: 'blossom',  name_zh: '樱花粉',    name_en: 'Blossom',         emoji: '🌸', unlockAt: 80,
+    vars: { '--bg': '#fdf4f6', '--bg-2': '#ffffff', '--bg-3': '#fde9ef',
+            '--ink': '#3a2430', '--ink-soft': '#8a7380',
+            '--accent': '#d98aa6', '--accent-2': '#b86b8a', '--accent-3': '#fcdce5',
+            '--header-bg': '#fbe0e8' } },
+  { id: 'ocean',    name_zh: '海蓝',      name_en: 'Ocean Breeze',    emoji: '🌊', unlockAt: 200,
+    vars: { '--bg': '#eef4f7', '--bg-2': '#ffffff', '--bg-3': '#e4edf2',
+            '--ink': '#1f2d36', '--ink-soft': '#6b7d87',
+            '--accent': '#6a9ab0', '--accent-2': '#4c7a91', '--accent-3': '#c9dde6',
+            '--header-bg': '#dce9ef' } },
+  { id: 'midnight', name_zh: '午夜蓝',    name_en: 'Midnight',        emoji: '🌃', unlockAt: 400,
+    vars: { '--bg': '#1c1d2b', '--bg-2': '#26273a', '--bg-3': '#2e2f46',
+            '--ink': '#eae8f5', '--ink-soft': '#9893b0',
+            '--accent': '#8a7fd0', '--accent-2': '#a9a0e0', '--accent-3': '#3d3e5a',
+            '--header-bg': '#15162a' } },
+  { id: 'sunset',   name_zh: '日落橙',    name_en: 'Sunset',          emoji: '🌅', unlockAt: 800,
+    vars: { '--bg': '#fdf3ec', '--bg-2': '#ffffff', '--bg-3': '#fce6d7',
+            '--ink': '#3a2818', '--ink-soft': '#8a7362',
+            '--accent': '#d08a5a', '--accent-2': '#a96a3d', '--accent-3': '#fbd9bc',
+            '--header-bg': '#f7d9bc' } },
+];
+function getSkin(id) { return SKINS.find(s => s.id === id) || SKINS[0]; }
+function applySkin(id) {
+  const skin = getSkin(id);
+  const root = document.documentElement;
+  Object.entries(skin.vars).forEach(([k, v]) => root.style.setProperty(k, v));
+  // Also update header bg (not a CSS variable yet in base style — use custom var)
+  document.querySelector('header')?.style.setProperty('background', skin.vars['--header-bg']);
+}
+
 // ===== State =====
 const state = {
-  starred: new Set(),
-  followed: new Set(['nj', 'bts', 'aespa']),
+  starred: new Set(JSON.parse(lsGet('kstarhub_starred') || '[]')),
+  followed: new Set(JSON.parse(lsGet('kstarhub_followed') || '["nj","bts","aespa"]')),
   currentFilter: 'all',
   currentGender: 'all',
   currentTz: 'KST',
   searchQuery: '',
   lang: lsGet('kstarhub_lang') || 'zh',
+  // New: leveling + check-in + skins
+  starlight: parseInt(lsGet('kstarhub_starlight') || '0', 10),
+  lastCheckIn: lsGet('kstarhub_last_checkin') || '',   // YYYY-MM-DD
+  streak: parseInt(lsGet('kstarhub_streak') || '0', 10),   // consecutive days
+  starlightSources: new Set(JSON.parse(lsGet('kstarhub_src') || '[]')), // dedupe "once per action" awards
+  currentSkin: lsGet('kstarhub_skin') || 'paper',
 };
+
+// Persist helpers
+function saveState() {
+  lsSet('kstarhub_starred',   JSON.stringify([...state.starred]));
+  lsSet('kstarhub_followed',  JSON.stringify([...state.followed]));
+  lsSet('kstarhub_starlight', String(state.starlight));
+  lsSet('kstarhub_last_checkin', state.lastCheckIn);
+  lsSet('kstarhub_streak',    String(state.streak));
+  lsSet('kstarhub_src',       JSON.stringify([...state.starlightSources]));
+  lsSet('kstarhub_skin',      state.currentSkin);
+}
+
+// Award starlight (dedupe via key). Returns true if awarded.
+function awardStarlight(amount, key) {
+  if (key) {
+    if (state.starlightSources.has(key)) return false;
+    state.starlightSources.add(key);
+  }
+  const before = getLevel(state.starlight).lv;
+  state.starlight += amount;
+  const after = getLevel(state.starlight).lv;
+  saveState();
+  if (after > before) {
+    showToast(`🎉 ${t('toast_levelup_pre')} Lv.${after} ${getLevel(state.starlight)[state.lang === 'zh' ? 'name_zh' : 'name_en']}！`);
+  }
+  return true;
+}
+
+// Today's local date YYYY-MM-DD
+function today() {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${dd}`;
+}
+function dateDiffDays(a, b) {
+  // days from a to b (strings YYYY-MM-DD)
+  if (!a || !b) return 999;
+  return Math.round((new Date(b) - new Date(a)) / 86400000);
+}
+
+// Check-in: auto on app open. Returns { awarded, reward, streakDay } or null if already today.
+function doCheckIn() {
+  const t_ = today();
+  if (state.lastCheckIn === t_) return null;        // already checked in today
+  const gap = dateDiffDays(state.lastCheckIn, t_);
+  state.streak = gap === 1 ? state.streak + 1 : 1;  // keep streak if yesterday; else reset
+  state.lastCheckIn = t_;
+  const streakDay = ((state.streak - 1) % 7);       // 0..6
+  const reward = CHECKIN_REWARDS[streakDay];
+  state.starlight += reward;
+  // Day 7 bonus: +0 extra starlight but clear toast will mention sticker/skin unlock if applicable
+  saveState();
+  return { reward, streakDay, streak: state.streak };
+}
 
 // ===== i18n =====
 const I18N = {
@@ -1249,7 +1659,7 @@ const I18N = {
     tz_cn: '🇨🇳 中国',
     tz_useast: '🇺🇸 美东',
     tz_uswest: '🇺🇸 美西',
-    banner: '📡 <b>真实数据</b> · 33 个热门团体、41 条日程 · 支持时区切换（KR/CN/US）· 数据源：Soompi / Billboard / allkpop / kprofiles / Ticketmaster · 更新于 2026/04/22',
+    banner: '📡 <b>真实数据</b> · 33 个热门团体、41 条日程 · 支持时区切换（KR/CN/US）· 数据源：Soompi / Billboard / allkpop / kprofiles / Ticketmaster · 更新于 2026/04/21',
     hero_next_prefix: '下一个回归：',
     hero_left: '剩余',
     hero_days: '天',
@@ -1315,6 +1725,27 @@ const I18N = {
     news_empty: '暂无匹配消息，明天再来看看吧～',
     news_error: '读取失败 · 数据更新可能稍后恢复',
     news_updated_at: '更新于 ',
+    // Leveling & check-in
+    lv_label: '追星等级',
+    lv_next_prefix: '距离下一级还差',
+    lv_maxed: '🏆 已达到最高等级！',
+    checkin_title: '🗓️ 每日签到',
+    checkin_streak_pre: '已连续签到',
+    checkin_days: '天',
+    checkin_btn_prefix: '今日签到',
+    checkin_done: '✓ 今日已签到',
+    checkin_success_pre: '签到成功',
+    checkin_day7: '连签 7 天奖励！',
+    day_short: '第',
+    earn_title: '💡 如何赚星光值',
+    earn_checkin: '每日签到',
+    earn_star: '收藏一个日程',
+    earn_follow: '关注一个团体',
+    earn_open: '首次打开团体主页',
+    skin_title: '🎨 主页皮肤',
+    skin_applied_pre: '已切换皮肤：',
+    skin_locked_pre: '需要 ',
+    toast_levelup_pre: '升级到',
     tz_long: { KST: '韩国时间', CST: '中国时间', EST: '美东时间', PST: '美西时间' },
     loc: {},
     phrases: {},
@@ -1332,7 +1763,7 @@ const I18N = {
     tz_cn: '🇨🇳 China',
     tz_useast: '🇺🇸 US East',
     tz_uswest: '🇺🇸 US West',
-    banner: '📡 <b>Real data</b> · 33 groups · 41 events · Timezone support (KR/CN/US) · Sources: Soompi / Billboard / allkpop / kprofiles / Ticketmaster · Updated 2026/04/22',
+    banner: '📡 <b>Real data</b> · 33 groups · 41 events · Timezone support (KR/CN/US) · Sources: Soompi / Billboard / allkpop / kprofiles / Ticketmaster · Updated 2026/04/21',
     hero_next_prefix: 'Next comeback: ',
     hero_left: 'in',
     hero_days: 'days',
@@ -1398,6 +1829,26 @@ const I18N = {
     news_empty: 'No matches right now — check back tomorrow!',
     news_error: 'Failed to load · the feed may recover shortly',
     news_updated_at: 'Updated ',
+    lv_label: 'Fandom Level',
+    lv_next_prefix: 'Next level in',
+    lv_maxed: '🏆 Max level reached!',
+    checkin_title: '🗓️ Daily Check-in',
+    checkin_streak_pre: 'Current streak',
+    checkin_days: 'days',
+    checkin_btn_prefix: 'Check in today',
+    checkin_done: '✓ Checked in',
+    checkin_success_pre: 'Checked in!',
+    checkin_day7: '7-day streak bonus!',
+    day_short: 'Day ',
+    earn_title: '💡 How to earn starlight',
+    earn_checkin: 'Daily check-in',
+    earn_star: 'Save an event',
+    earn_follow: 'Follow a group',
+    earn_open: 'Open a group page (first time)',
+    skin_title: '🎨 Home skins',
+    skin_applied_pre: 'Skin applied: ',
+    skin_locked_pre: 'Requires ',
+    toast_levelup_pre: 'Leveled up to',
     tz_long: { KST: 'Korea Time', CST: 'China Time', EST: 'US East Time', PST: 'US West Time' },
     loc: {
       '音源已上线': 'Streaming now',
@@ -1439,7 +1890,7 @@ const I18N = {
     tz_cn: '🇨🇳 중국',
     tz_useast: '🇺🇸 미국 동부',
     tz_uswest: '🇺🇸 미국 서부',
-    banner: '📡 <b>실시간 데이터</b> · 33팀 · 41개 일정 · 시간대 지원(KR/CN/US) · 출처: Soompi / Billboard / allkpop / kprofiles / Ticketmaster · 2026/04/22 업데이트',
+    banner: '📡 <b>실시간 데이터</b> · 33팀 · 41개 일정 · 시간대 지원(KR/CN/US) · 출처: Soompi / Billboard / allkpop / kprofiles / Ticketmaster · 2026/04/21 업데이트',
     hero_next_prefix: '다음 컴백: ',
     hero_left: '남은',
     hero_days: '일',
@@ -1505,6 +1956,26 @@ const I18N = {
     news_empty: '지금은 일치하는 뉴스가 없어요 — 내일 다시 확인해 주세요!',
     news_error: '로드 실패 · 잠시 후 다시 시도됩니다',
     news_updated_at: '업데이트됨 ',
+    lv_label: '팬 레벨',
+    lv_next_prefix: '다음 레벨까지',
+    lv_maxed: '🏆 최고 레벨 달성!',
+    checkin_title: '🗓️ 매일 출석',
+    checkin_streak_pre: '연속 출석',
+    checkin_days: '일',
+    checkin_btn_prefix: '오늘 출석',
+    checkin_done: '✓ 오늘 완료',
+    checkin_success_pre: '출석 완료!',
+    checkin_day7: '7일 연속 보너스!',
+    day_short: 'Day ',
+    earn_title: '💡 스타라이트 얻는 방법',
+    earn_checkin: '매일 출석',
+    earn_star: '일정 저장',
+    earn_follow: '그룹 팔로우',
+    earn_open: '그룹 페이지 첫 방문',
+    skin_title: '🎨 홈 스킨',
+    skin_applied_pre: '스킨 적용: ',
+    skin_locked_pre: '필요: ',
+    toast_levelup_pre: '레벨 업!',
     tz_long: { KST: '한국 시간', CST: '중국 시간', EST: '미국 동부', PST: '미국 서부' },
     loc: {
       '音源已上线': '음원 공개',
@@ -1544,7 +2015,7 @@ const I18N = {
     tz_cn: '🇨🇳 China',
     tz_useast: '🇺🇸 EE.UU. Este',
     tz_uswest: '🇺🇸 EE.UU. Oeste',
-    banner: '📡 <b>Datos reales</b> · 33 grupos · 41 eventos · Soporte multizona horaria (KR/CN/US) · Fuentes: Soompi / Billboard / allkpop / kprofiles / Ticketmaster · Actualizado 2026/04/22',
+    banner: '📡 <b>Datos reales</b> · 33 grupos · 41 eventos · Soporte multizona horaria (KR/CN/US) · Fuentes: Soompi / Billboard / allkpop / kprofiles / Ticketmaster · Actualizado 2026/04/21',
     hero_next_prefix: 'Próximo regreso: ',
     hero_left: 'en',
     hero_days: 'días',
@@ -1610,6 +2081,26 @@ const I18N = {
     news_empty: 'Sin coincidencias por ahora — ¡vuelve mañana!',
     news_error: 'Error al cargar · el servicio se recuperará pronto',
     news_updated_at: 'Actualizado ',
+    lv_label: 'Nivel de fan',
+    lv_next_prefix: 'Siguiente nivel en',
+    lv_maxed: '🏆 ¡Nivel máximo alcanzado!',
+    checkin_title: '🗓️ Check-in diario',
+    checkin_streak_pre: 'Racha actual',
+    checkin_days: 'días',
+    checkin_btn_prefix: 'Check-in de hoy',
+    checkin_done: '✓ Ya hiciste check-in',
+    checkin_success_pre: '¡Check-in hecho!',
+    checkin_day7: '¡Bono de 7 días seguidos!',
+    day_short: 'Día ',
+    earn_title: '💡 Cómo ganar estrellitas',
+    earn_checkin: 'Check-in diario',
+    earn_star: 'Guardar un evento',
+    earn_follow: 'Seguir un grupo',
+    earn_open: 'Abrir la página de un grupo (1ª vez)',
+    skin_title: '🎨 Skins de inicio',
+    skin_applied_pre: 'Skin aplicado: ',
+    skin_locked_pre: 'Requiere ',
+    toast_levelup_pre: '¡Subiste a',
     tz_long: { KST: 'Hora de Corea', CST: 'Hora de China', EST: 'Hora EE.UU. Este', PST: 'Hora EE.UU. Oeste' },
     loc: {
       '音源已上线': 'Ya en streaming',
@@ -1773,8 +2264,88 @@ function renderGroups() {
 }
 
 function renderProfile() {
+  const lang = state.lang;
   document.getElementById('star-count').textContent = state.starred.size;
   document.getElementById('group-count').textContent = state.followed.size;
+  document.getElementById('streak-stat').textContent = state.streak;
+
+  // Level card
+  const info = getLevel(state.starlight);
+  const levelName = lang === 'zh' ? info.name_zh : info.name_en;
+  document.getElementById('level-num').textContent = info.lv;
+  document.getElementById('level-icon').textContent = info.icon;
+  document.getElementById('level-name').textContent = levelName;
+  document.getElementById('level-points').textContent = state.starlight + ' ⭐';
+  document.getElementById('level-bar-fill').style.width = (info.progress * 100).toFixed(1) + '%';
+  const remaining = info.next ? (info.next.min - state.starlight) : 0;
+  const nextEl = document.getElementById('level-next');
+  if (info.next) {
+    const nextName = lang === 'zh' ? info.next.name_zh : info.next.name_en;
+    nextEl.innerHTML = `${t('lv_next_prefix')} <b>${remaining}</b> ⭐ · Lv.${info.next.lv} ${nextName}`;
+  } else {
+    nextEl.textContent = t('lv_maxed');
+  }
+  // Hero line in Me tab
+  document.getElementById('me-level-line').textContent =
+    `${t('lv_label')} Lv.${info.lv} ${levelName} · ${state.starlight} ⭐`;
+  document.getElementById('me-avatar').textContent = info.icon;
+
+  // Ladder
+  document.getElementById('level-ladder').innerHTML = LEVEL_TIERS.map(tier => {
+    const reached = state.starlight >= tier.min;
+    const current = tier.lv === info.lv;
+    const cls = current ? 'current' : (reached ? 'reached' : '');
+    const nm = lang === 'zh' ? tier.name_zh : tier.name_en;
+    return `<div class="ladder-step ${cls}">
+      <span class="step-icon">${tier.icon}</span>
+      <span class="step-lv">Lv.${tier.lv}</span>
+    </div>`;
+  }).join('');
+
+  // Check-in grid: 7 slots representing THIS cycle (days 1-7 of current streak-week)
+  const streakDayIdx = state.streak === 0 ? -1 : ((state.streak - 1) % 7); // 0..6 or -1
+  const didToday = state.lastCheckIn === today();
+  const cells = CHECKIN_REWARDS.map((rew, i) => {
+    const dayNum = i + 1;
+    let cls = '';
+    if (i === 6) cls += ' bonus';
+    if (streakDayIdx >= 0 && i < streakDayIdx) cls += ' done';       // past days of this cycle
+    if (streakDayIdx === i && didToday) cls += ' done today';
+    else if (streakDayIdx + 1 === i && !didToday) cls += ' today';   // next slot = today pending
+    else if (streakDayIdx === -1 && i === 0) cls += ' today';
+    return `<div class="checkin-day${cls}">
+      <div>${t('day_short')}${dayNum}</div>
+      <div class="day-reward">+${rew}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('checkin-grid').innerHTML = cells;
+  document.getElementById('streak-count').textContent = state.streak;
+  // Button state
+  const btn = document.getElementById('checkin-btn');
+  if (didToday) {
+    btn.classList.add('done');
+    btn.textContent = t('checkin_done');
+  } else {
+    btn.classList.remove('done');
+    const next = CHECKIN_REWARDS[((state.streak) % 7)];
+    btn.textContent = `${t('checkin_btn_prefix')} +${next}`;
+  }
+
+  // Skin grid
+  document.getElementById('skin-grid').innerHTML = SKINS.map(s => {
+    const unlocked = state.starlight >= s.unlockAt;
+    const active = state.currentSkin === s.id;
+    const nm = lang === 'zh' ? s.name_zh : s.name_en;
+    const style = `background:${s.vars['--bg']};color:${s.vars['--ink']};`;
+    const lockTxt = unlocked ? '' : `<div class="skin-lock">🔒 ${s.unlockAt}⭐</div>`;
+    return `<div class="skin-card ${unlocked ? '' : 'locked'} ${active ? 'active' : ''}" data-skin="${s.id}" style="${style}">
+      <div class="skin-preview" style="background:${s.vars['--accent-3']};">${s.emoji}</div>
+      <div class="skin-name">${nm}</div>
+      ${lockTxt}
+    </div>`;
+  }).join('');
+  const unlocked = SKINS.filter(s => state.starlight >= s.unlockAt).length;
+  document.getElementById('skin-unlock-count').textContent = `${unlocked} / ${SKINS.length}`;
 }
 
 // ===== News feed (loaded from news.json, auto-updated by GitHub Actions) =====
@@ -1845,6 +2416,8 @@ function openGroupModal(gid) {
   const g = getGroup(gid);
   if (!g) return;
   currentModalGroupId = gid;
+  // +1 starlight, once per group per app session (first-open reward)
+  awardStarlight(1, 'open_' + gid);
 
   // Header: avatar + name + company
   const header = document.getElementById('modal-header');
@@ -2000,9 +2573,44 @@ document.addEventListener('click', (e) => {
     } else {
       state.starred.add(id);
       showToast(t('toast_starred'));
+      awardStarlight(2, 'star_' + id);  // +2 starlight, once per event
     }
+    saveState();
     renderHome();
     renderAllEvents();
+    renderProfile();
+    return;
+  }
+  // check-in button
+  if (e.target.id === 'checkin-btn' && !e.target.classList.contains('done')) {
+    const res = doCheckIn();
+    if (res) {
+      const bonus = res.streakDay === 6 ? ` · 🎁 ${t('checkin_day7')}` : '';
+      showToast(`${t('checkin_success_pre')} +${res.reward} ⭐${bonus}`);
+      // Level-up check (after raw points add)
+      const before = getLevel(state.starlight - res.reward).lv;
+      const after = getLevel(state.starlight).lv;
+      if (after > before) {
+        setTimeout(() => showToast(`🎉 ${t('toast_levelup_pre')} Lv.${after}！`), 900);
+      }
+      renderProfile();
+    }
+    return;
+  }
+  // skin card click
+  const skinCard = e.target.closest('.skin-card');
+  if (skinCard) {
+    const sid = skinCard.dataset.skin;
+    const skin = getSkin(sid);
+    if (state.starlight < skin.unlockAt) {
+      showToast(`🔒 ${t('skin_locked_pre')} ${skin.unlockAt} ⭐`);
+      return;
+    }
+    state.currentSkin = sid;
+    applySkin(sid);
+    saveState();
+    showToast(`🎨 ${t('skin_applied_pre')}${state.lang === 'zh' ? skin.name_zh : skin.name_en}`);
+    renderProfile();
     return;
   }
   // dropdown trigger (toggle open/close)
@@ -2068,7 +2676,9 @@ document.addEventListener('click', (e) => {
     } else {
       state.followed.add(id);
       showToast(t('toast_followed'));
+      awardStarlight(5, 'follow_' + id);  // +5 starlight, once per group
     }
+    saveState();
     // refresh both modal button + underlying grid
     const followed = state.followed.has(id);
     e.target.textContent = followed ? t('follow_yes') : t('follow_no');
@@ -2140,7 +2750,22 @@ function applyLang() {
 }
 
 // ===== Init =====
+applySkin(state.currentSkin);   // apply saved skin immediately so no flash
 applyLang();
+// Auto check-in on app open
+(function autoCheckIn() {
+  const res = doCheckIn();
+  if (res) {
+    const bonus = res.streakDay === 6 ? ` · 🎁 ${t('checkin_day7')}` : '';
+    setTimeout(() => showToast(`${t('checkin_success_pre')} +${res.reward} ⭐${bonus}`), 600);
+    // Level-up check
+    const before = getLevel(state.starlight - res.reward).lv;
+    const after = getLevel(state.starlight).lv;
+    if (after > before) {
+      setTimeout(() => showToast(`🎉 ${t('toast_levelup_pre')} Lv.${after}！`), 1600);
+    }
+  }
+})();
 renderProfile();
 loadNews(); // pre-warm so the News tab is instant on first click
 setInterval(updateCountdown, 60000);
