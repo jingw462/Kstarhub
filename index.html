@@ -8,21 +8,24 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --bg: #fef6ff;
-    --bg-2: #fff;
-    --ink: #2b1a3d;
-    --ink-soft: #6b5b80;
-    --accent: #ff6fb5;
-    --accent-2: #8a5cf6;
-    --accent-3: #ffd36e;
-    --shadow: 0 8px 24px rgba(138, 92, 246, 0.12);
-    --shadow-hover: 0 12px 32px rgba(138, 92, 246, 0.22);
-    --radius: 18px;
+    /* "Paper & Cream" minimalist palette — warm, low-saturation, alternating cream/white */
+    --bg: #f6f1e8;       /* warm paper cream (page base) */
+    --bg-2: #ffffff;     /* clean white (card base) */
+    --bg-3: #faf5ec;     /* alt cream tint (alternating sections) */
+    --ink: #2d2a24;      /* warm dark charcoal */
+    --ink-soft: #8a8175; /* warm muted gray */
+    --accent: #c4a07a;   /* muted caramel (active / hover highlight) */
+    --accent-2: #a68968; /* deeper caramel */
+    --accent-3: #e9dcc4; /* light sand (soft fills) */
+    --line: rgba(45, 42, 36, 0.08);
+    --shadow: 0 2px 14px rgba(45, 42, 36, 0.04);
+    --shadow-hover: 0 6px 22px rgba(45, 42, 36, 0.08);
+    --radius: 14px;
   }
 
   body {
     font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", "Microsoft YaHei", sans-serif;
-    background: linear-gradient(180deg, #fef6ff 0%, #f3ecff 100%);
+    background: var(--bg);
     color: var(--ink);
     min-height: 100vh;
     padding-bottom: 60px;
@@ -30,11 +33,11 @@
 
   /* ===== Header ===== */
   header {
-    background: linear-gradient(120deg, #ff6fb5 0%, #8a5cf6 100%);
-    padding: 28px 24px;
-    color: #fff;
-    border-radius: 0 0 28px 28px;
-    box-shadow: var(--shadow);
+    background: #efe7d6;   /* slightly deeper cream — calm, paper-like */
+    padding: 30px 24px 26px;
+    color: var(--ink);
+    border-radius: 0 0 22px 22px;
+    box-shadow: 0 1px 0 var(--line);
     position: relative;
     overflow: hidden;
   }
@@ -43,7 +46,7 @@
     position: absolute;
     top: -40px; right: -30px;
     width: 180px; height: 180px;
-    background: radial-gradient(circle, rgba(255,255,255,0.25), transparent 70%);
+    background: radial-gradient(circle, rgba(196, 160, 122, 0.18), transparent 70%);
     border-radius: 50%;
   }
   header::after {
@@ -51,20 +54,22 @@
     position: absolute;
     bottom: -50px; left: -20px;
     width: 140px; height: 140px;
-    background: radial-gradient(circle, rgba(255,211,110,0.4), transparent 70%);
+    background: radial-gradient(circle, rgba(233, 220, 196, 0.5), transparent 70%);
     border-radius: 50%;
   }
   .logo {
     display: flex; align-items: center; gap: 10px;
-    font-size: 22px; font-weight: 800; letter-spacing: 0.5px;
+    font-size: 22px; font-weight: 800; letter-spacing: 0.3px;
     position: relative; z-index: 2;
   }
   .logo-badge {
     width: 38px; height: 38px;
-    background: #fff; border-radius: 12px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
     font-size: 22px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 1px 4px rgba(45,42,36,0.06);
   }
   .tagline {
     margin-top: 6px;
@@ -106,9 +111,9 @@
     white-space: nowrap;
   }
   .tab.active {
-    background: linear-gradient(120deg, #ff6fb5, #8a5cf6);
+    background: var(--ink);
     color: #fff;
-    box-shadow: 0 4px 12px rgba(138, 92, 246, 0.3);
+    box-shadow: 0 2px 8px rgba(45, 42, 36, 0.15);
   }
 
   /* ===== Section ===== */
@@ -132,7 +137,8 @@
 
   /* ===== Countdown highlight ===== */
   .hero-card {
-    background: linear-gradient(135deg, #ffe4f1, #e9dcff);
+    background: var(--bg-2);
+    border: 1px solid var(--line);
     padding: 20px;
     border-radius: var(--radius);
     margin-bottom: 20px;
@@ -149,26 +155,26 @@
     display: flex; align-items: center; justify-content: center;
     font-size: 38px;
     flex-shrink: 0;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border: 1px solid var(--line);
+    box-shadow: 0 2px 8px rgba(45,42,36,0.05);
   }
   .hero-info { flex: 1; }
   .hero-title { font-size: 17px; font-weight: 700; margin-bottom: 3px; }
   .hero-sub { font-size: 13px; color: var(--ink-soft); margin-bottom: 8px; }
   .countdown {
     display: inline-flex; gap: 6px; align-items: center;
-    background: #fff;
+    background: var(--bg-3);
+    border: 1px solid var(--line);
     padding: 6px 12px;
     border-radius: 20px;
     font-size: 13px;
     font-weight: 600;
-    color: var(--accent-2);
+    color: var(--ink);
   }
   .countdown-num {
     font-size: 20px;
-    background: linear-gradient(120deg, #ff6fb5, #8a5cf6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--accent-2);
+    font-weight: 800;
   }
 
   /* ===== Event cards ===== */
@@ -214,10 +220,10 @@
     text-transform: uppercase;
     letter-spacing: 0.3px;
   }
-  .tag.comeback { background: #ffe4f1; color: #d63384; }
-  .tag.concert { background: #e9dcff; color: #6f42c1; }
-  .tag.festival { background: #fff4d3; color: #b8860b; }
-  .tag.fanmeet { background: #d3f9e0; color: #0d8c4a; }
+  .tag.comeback { background: rgba(196, 160, 122, 0.18); color: var(--accent-2); }
+  .tag.concert  { background: rgba(45, 42, 36, 0.08);   color: var(--ink); }
+  .tag.festival { background: rgba(196, 160, 122, 0.28); color: #7a5f3e; }
+  .tag.fanmeet  { background: rgba(138, 129, 117, 0.15); color: var(--ink-soft); }
   .event-meta {
     font-size: 12px; color: var(--ink-soft);
     display: flex; align-items: center; gap: 10px;
@@ -229,7 +235,7 @@
     text-align: center;
     min-width: 52px;
     padding: 6px 8px;
-    background: linear-gradient(135deg, #ff6fb5, #8a5cf6);
+    background: var(--ink);
     color: #fff;
     border-radius: 10px;
     flex-shrink: 0;
@@ -251,7 +257,7 @@
     transition: transform 0.2s;
   }
   .star-btn:hover { transform: scale(1.2); }
-  .star-btn.active { filter: drop-shadow(0 0 4px rgba(255, 211, 110, 0.8)); }
+  .star-btn.active { filter: drop-shadow(0 0 4px rgba(196, 160, 122, 0.7)); }
 
   /* ===== Group grid ===== */
   .group-grid {
@@ -292,7 +298,8 @@
 
   /* data source banner (now at page bottom) */
   .data-banner {
-    background: linear-gradient(120deg, #fff4d3, #ffd6e7);
+    background: var(--bg-3);
+    border: 1px solid var(--line);
     padding: 12px 16px;
     border-radius: 14px;
     font-size: 12px;
@@ -319,10 +326,7 @@
   }
   .stat-num {
     font-size: 22px; font-weight: 800;
-    background: linear-gradient(120deg, #ff6fb5, #8a5cf6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--accent-2);
   }
   .stat-label {
     font-size: 11px; color: var(--ink-soft);
@@ -351,13 +355,13 @@
     border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
     font-size: 22px;
-    background: #f3ecff;
+    background: var(--bg-3);
     transition: all 0.2s;
     cursor: pointer;
   }
   .sticker.unlocked {
-    background: linear-gradient(135deg, #ffe4f1, #e9dcff);
-    box-shadow: 0 2px 6px rgba(138,92,246,0.2);
+    background: var(--accent-3);
+    box-shadow: 0 2px 6px rgba(196, 160, 122, 0.2);
   }
   .sticker.locked { opacity: 0.3; filter: grayscale(1); }
 
@@ -381,7 +385,7 @@
     transition: all 0.2s;
   }
   .chip.active {
-    background: linear-gradient(120deg, #ff6fb5, #8a5cf6);
+    background: var(--ink);
     color: #fff;
   }
 
@@ -415,7 +419,7 @@
     font-size: 13px;
   }
   .search-clear {
-    background: #f3ecff;
+    background: var(--bg-3);
     border: none;
     width: 24px;
     height: 24px;
@@ -427,7 +431,7 @@
     align-items: center;
     justify-content: center;
   }
-  .search-clear:hover { background: #e9dcff; }
+  .search-clear:hover { background: var(--accent-3); }
 
   /* timezone selector */
   .tz-row {
@@ -445,7 +449,7 @@
     padding: 5px 12px;
     border-radius: 16px;
     border: none;
-    background: #f3ecff;
+    background: var(--bg-3);
     color: var(--ink-soft);
     font-size: 12px;
     font-weight: 600;
@@ -453,14 +457,14 @@
     transition: all 0.2s;
   }
   .tz-btn.active {
-    background: linear-gradient(120deg, #ff6fb5, #8a5cf6);
+    background: var(--ink);
     color: #fff;
   }
   .lang-btn {
     padding: 5px 12px;
     border-radius: 16px;
     border: none;
-    background: #f3ecff;
+    background: var(--bg-3);
     color: var(--ink-soft);
     font-size: 12px;
     font-weight: 600;
@@ -468,7 +472,7 @@
     transition: all 0.2s;
   }
   .lang-btn.active {
-    background: linear-gradient(120deg, #8a5cf6, #4ecdc4);
+    background: var(--ink);
     color: #fff;
   }
 
@@ -483,9 +487,9 @@
   }
   .dropdown { position: relative; }
   .dd-trigger {
-    background: rgba(255,255,255,0.22);
-    color: #fff;
-    border: 1px solid rgba(255,255,255,0.38);
+    background: rgba(255, 255, 255, 0.7);
+    color: var(--ink);
+    border: 1px solid var(--line);
     font-size: 12px;
     font-weight: 700;
     padding: 7px 12px;
@@ -499,15 +503,16 @@
     transition: background 0.18s;
     white-space: nowrap;
   }
-  .dd-trigger:hover { background: rgba(255,255,255,0.34); }
+  .dd-trigger:hover { background: #fff; }
   .dd-caret { font-size: 9px; opacity: 0.85; margin-left: 1px; }
   .dd-menu {
     position: absolute;
     top: calc(100% + 6px);
     right: 0;
     background: #fff;
+    border: 1px solid var(--line);
     border-radius: 12px;
-    box-shadow: 0 12px 28px rgba(43,26,61,0.22);
+    box-shadow: 0 12px 28px rgba(45, 42, 36, 0.10);
     min-width: 140px;
     padding: 5px;
     display: none;
@@ -524,9 +529,9 @@
     white-space: nowrap;
     user-select: none;
   }
-  .dd-item:hover { background: #f3ecff; }
+  .dd-item:hover { background: var(--bg-3); }
   .dd-item.active {
-    background: linear-gradient(120deg, #ff6fb5, #8a5cf6);
+    background: var(--ink);
     color: #fff;
   }
   @media (max-width: 520px) {
@@ -540,7 +545,7 @@
   .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(43, 26, 61, 0.55);
+    background: rgba(45, 42, 36, 0.45);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
     display: none;
@@ -625,7 +630,8 @@
     margin-bottom: 16px;
   }
   .modal-meta-item {
-    background: #f8f3ff;
+    background: var(--bg-3);
+    border: 1px solid var(--line);
     border-radius: 12px;
     padding: 10px 12px;
   }
@@ -643,7 +649,8 @@
     font-weight: 600;
   }
   .modal-intro {
-    background: linear-gradient(120deg, #fff4f8, #f3ecff);
+    background: var(--bg);
+    border: 1px solid var(--line);
     border-radius: 12px;
     padding: 14px 14px;
     font-size: 13px;
@@ -666,7 +673,7 @@
     align-items: center;
     gap: 10px;
     padding: 10px 12px;
-    background: #f8f5ff;
+    background: var(--bg-3);
     border-radius: 12px;
     border-left: 3px solid var(--accent-2);
   }
@@ -689,10 +696,10 @@
     border-radius: 10px;
     font-weight: 700;
   }
-  .modal-event-tag.comeback { background: #ffe0ec; color: #d6336c; }
-  .modal-event-tag.concert { background: #e0f2ff; color: #1864ab; }
-  .modal-event-tag.festival { background: #fff5d6; color: #c2882d; }
-  .modal-event-tag.fanmeet { background: #e5ffe8; color: #2f9e44; }
+  .modal-event-tag.comeback { background: rgba(196, 160, 122, 0.18); color: var(--accent-2); }
+  .modal-event-tag.concert  { background: rgba(45, 42, 36, 0.08);   color: var(--ink); }
+  .modal-event-tag.festival { background: rgba(196, 160, 122, 0.28); color: #7a5f3e; }
+  .modal-event-tag.fanmeet  { background: rgba(138, 129, 117, 0.15); color: var(--ink-soft); }
   .modal-empty {
     text-align: center;
     font-size: 12px;
@@ -709,12 +716,13 @@
     font-weight: 700;
     cursor: pointer;
     transition: all 0.2s;
-    background: linear-gradient(120deg, #ff6fb5, #8a5cf6);
+    background: var(--ink);
     color: #fff;
   }
   .modal-follow-btn.following {
-    background: #f3ecff;
-    color: var(--accent-2);
+    background: var(--bg-3);
+    color: var(--ink-soft);
+    border: 1px solid var(--line);
   }
   .modal-link-row {
     display: flex;
@@ -726,10 +734,10 @@
     flex: 1;
     min-width: 120px;
     padding: 10px 12px;
-    border: 1px solid #e8def8;
+    border: 1px solid var(--line);
     border-radius: 12px;
     background: #fff;
-    color: var(--accent-2);
+    color: var(--ink);
     font-size: 12.5px;
     font-weight: 700;
     text-decoration: none;
@@ -741,14 +749,14 @@
     cursor: pointer;
   }
   .modal-link-btn:hover {
-    background: linear-gradient(120deg, #ff6fb5, #8a5cf6);
+    background: var(--ink);
     color: #fff;
     border-color: transparent;
     transform: translateY(-1px);
   }
   .modal-link-btn.disabled {
     color: var(--ink-soft);
-    background: #f5f0ff;
+    background: var(--bg-3);
     cursor: not-allowed;
     pointer-events: none;
     opacity: 0.7;
@@ -760,7 +768,7 @@
     bottom: 30px;
     left: 50%;
     transform: translateX(-50%) translateY(100px);
-    background: rgba(43, 26, 61, 0.95);
+    background: rgba(45, 42, 36, 0.95);
     color: #fff;
     padding: 10px 20px;
     border-radius: 24px;
@@ -777,7 +785,8 @@
     align-items: center;
     margin-bottom: 14px;
     padding: 10px 14px;
-    background: linear-gradient(120deg, #fff4d3, #ffd6e7);
+    background: var(--bg-3);
+    border: 1px solid var(--line);
     border-radius: 12px;
     font-size: 12px;
     color: var(--ink);
@@ -831,7 +840,7 @@
     color: var(--accent-2);
   }
   .news-group-tag {
-    background: #f3ecff;
+    background: rgba(196, 160, 122, 0.18);
     color: var(--accent-2);
     padding: 2px 8px;
     border-radius: 10px;
@@ -872,31 +881,34 @@
       <div class="tagline" data-i18n="tagline">一站式 K-pop 追星日历 · 回归 / 演唱会 / 音乐节</div>
     </div>
   </div>
-  <div class="header-ctrl">
-    <div class="dropdown" id="lang-dd">
-      <button class="dd-trigger" id="lang-trigger" type="button">
-        <span>🌐</span><span id="lang-current">中文</span><span class="dd-caret">▾</span>
-      </button>
-      <div class="dd-menu" role="menu">
-        <div class="dd-item" data-lang="zh" role="menuitem">🇨🇳 中文</div>
-        <div class="dd-item" data-lang="en" role="menuitem">🇺🇸 English</div>
-        <div class="dd-item" data-lang="ko" role="menuitem">🇰🇷 한국어</div>
-        <div class="dd-item" data-lang="es" role="menuitem">🇲🇽 Español</div>
-      </div>
-    </div>
-    <div class="dropdown" id="tz-dd">
-      <button class="dd-trigger" id="tz-trigger" type="button">
-        <span>🌍</span><span id="tz-current">KST</span><span class="dd-caret">▾</span>
-      </button>
-      <div class="dd-menu" role="menu">
-        <div class="dd-item" data-tz="KST" role="menuitem"><span data-i18n="tz_kr">🇰🇷 韩国</span> · KST</div>
-        <div class="dd-item" data-tz="CST" role="menuitem"><span data-i18n="tz_cn">🇨🇳 中国</span> · CST</div>
-        <div class="dd-item" data-tz="EST" role="menuitem"><span data-i18n="tz_useast">🇺🇸 美东</span> · EDT</div>
-        <div class="dd-item" data-tz="PST" role="menuitem"><span data-i18n="tz_uswest">🇺🇸 美西</span> · PDT</div>
-      </div>
+</header>
+
+<!-- Moved OUT of <header> so the dropdown menu can extend below the header edge
+     without being clipped by header's overflow:hidden. -->
+<div class="header-ctrl">
+  <div class="dropdown" id="lang-dd">
+    <button class="dd-trigger" id="lang-trigger" type="button">
+      <span>🌐</span><span id="lang-current">中文</span><span class="dd-caret">▾</span>
+    </button>
+    <div class="dd-menu" role="menu">
+      <div class="dd-item" data-lang="zh" role="menuitem">🇨🇳 中文</div>
+      <div class="dd-item" data-lang="en" role="menuitem">🇺🇸 English</div>
+      <div class="dd-item" data-lang="ko" role="menuitem">🇰🇷 한국어</div>
+      <div class="dd-item" data-lang="es" role="menuitem">🇲🇽 Español</div>
     </div>
   </div>
-</header>
+  <div class="dropdown" id="tz-dd">
+    <button class="dd-trigger" id="tz-trigger" type="button">
+      <span>🌍</span><span id="tz-current">KST</span><span class="dd-caret">▾</span>
+    </button>
+    <div class="dd-menu" role="menu">
+      <div class="dd-item" data-tz="KST" role="menuitem"><span data-i18n="tz_kr">🇰🇷 韩国</span> · KST</div>
+      <div class="dd-item" data-tz="CST" role="menuitem"><span data-i18n="tz_cn">🇨🇳 中国</span> · CST</div>
+      <div class="dd-item" data-tz="EST" role="menuitem"><span data-i18n="tz_useast">🇺🇸 美东</span> · EDT</div>
+      <div class="dd-item" data-tz="PST" role="menuitem"><span data-i18n="tz_uswest">🇺🇸 美西</span> · PDT</div>
+    </div>
+  </div>
+</div>
 
 <div class="container">
 
@@ -972,7 +984,7 @@
   <!-- Me -->
   <section class="section" id="me">
     <div class="hero-card">
-      <div class="hero-avatar" style="background:#e9dcff;">🌟</div>
+      <div class="hero-avatar" style="background:var(--accent-3);">🌟</div>
       <div class="hero-info">
         <div class="hero-title" data-i18n="me_hi">Hi, Jing！</div>
         <div class="hero-sub" data-i18n="me_level">追星等级 Lv.3 · 星光值 280</div>
@@ -1020,7 +1032,7 @@
       <div style="font-size:13px;color:var(--ink-soft);line-height:1.9;">
         <span data-i18n="settings_notify">🔔 开启回归提醒</span><br>
         <span data-i18n="settings_tz">🌍 时区</span>: KST (Seoul)<br>
-        <span data-i18n="settings_theme">🎨 主题：粉紫渐变</span><br>
+        <span data-i18n="settings_theme">🎨 主题：米白简约</span><br>
         <span data-i18n="settings_email">📬 邮箱</span>: jingw462@gmail.com
       </div>
     </div>
@@ -1030,7 +1042,7 @@
 
 <div class="container" style="padding-top:0;">
   <div class="data-banner" data-i18n-html="banner">
-    📡 <b>真实数据</b> · 33 个热门团体、41 条日程 · 支持时区切换（KR/CN/US）· 数据源：Soompi / Billboard / allkpop / kprofiles / Ticketmaster · 更新于 2026/04/22
+    📡 <b>真实数据</b> · 33 个热门团体、41 条日程 · 支持时区切换（KR/CN/US）· 数据源：Soompi / Billboard / allkpop / kprofiles / Ticketmaster · 更新于 2026/04/21
   </div>
 </div>
 
@@ -1237,7 +1249,7 @@ const I18N = {
     tz_cn: '🇨🇳 中国',
     tz_useast: '🇺🇸 美东',
     tz_uswest: '🇺🇸 美西',
-    banner: '📡 <b>真实数据</b> · 33 个热门团体、41 条日程 · 支持时区切换（KR/CN/US）· 数据源：Soompi / Billboard / allkpop / kprofiles / Ticketmaster · 更新于 2026/04/22',
+    banner: '📡 <b>真实数据</b> · 33 个热门团体、41 条日程 · 支持时区切换（KR/CN/US）· 数据源：Soompi / Billboard / allkpop / kprofiles / Ticketmaster · 更新于 2026/04/21',
     hero_next_prefix: '下一个回归：',
     hero_left: '剩余',
     hero_days: '天',
@@ -1269,7 +1281,7 @@ const I18N = {
     settings_title: '⚙️ 设置',
     settings_notify: '🔔 开启回归提醒',
     settings_tz: '🌍 时区',
-    settings_theme: '🎨 主题：粉紫渐变',
+    settings_theme: '🎨 主题：米白简约',
     settings_email: '📬 邮箱',
     footer_1: '本页为产品原型 Demo · 使用真实团体名称 + 原创卡通emoji形象，避免肖像权风险',
     footer_2: '数据来源 · Soompi / Billboard / allkpop / kprofiles / Ticketmaster / Wikipedia (公开报道)',
@@ -1320,7 +1332,7 @@ const I18N = {
     tz_cn: '🇨🇳 China',
     tz_useast: '🇺🇸 US East',
     tz_uswest: '🇺🇸 US West',
-    banner: '📡 <b>Real data</b> · 33 groups · 41 events · Timezone support (KR/CN/US) · Sources: Soompi / Billboard / allkpop / kprofiles / Ticketmaster · Updated 2026/04/22',
+    banner: '📡 <b>Real data</b> · 33 groups · 41 events · Timezone support (KR/CN/US) · Sources: Soompi / Billboard / allkpop / kprofiles / Ticketmaster · Updated 2026/04/21',
     hero_next_prefix: 'Next comeback: ',
     hero_left: 'in',
     hero_days: 'days',
@@ -1352,7 +1364,7 @@ const I18N = {
     settings_title: '⚙️ Settings',
     settings_notify: '🔔 Comeback notifications',
     settings_tz: '🌍 Timezone',
-    settings_theme: '🎨 Theme: Pink-Purple Gradient',
+    settings_theme: '🎨 Theme: Paper & Cream',
     settings_email: '📬 Email',
     footer_1: 'Product prototype · Real group names + original emoji avatars (no portrait rights risk)',
     footer_2: 'Data sources · Soompi / Billboard / allkpop / kprofiles / Ticketmaster / Wikipedia',
@@ -1427,7 +1439,7 @@ const I18N = {
     tz_cn: '🇨🇳 중국',
     tz_useast: '🇺🇸 미국 동부',
     tz_uswest: '🇺🇸 미국 서부',
-    banner: '📡 <b>실시간 데이터</b> · 33팀 · 41개 일정 · 시간대 지원(KR/CN/US) · 출처: Soompi / Billboard / allkpop / kprofiles / Ticketmaster · 2026/04/22 업데이트',
+    banner: '📡 <b>실시간 데이터</b> · 33팀 · 41개 일정 · 시간대 지원(KR/CN/US) · 출처: Soompi / Billboard / allkpop / kprofiles / Ticketmaster · 2026/04/21 업데이트',
     hero_next_prefix: '다음 컴백: ',
     hero_left: '남은',
     hero_days: '일',
@@ -1459,7 +1471,7 @@ const I18N = {
     settings_title: '⚙️ 설정',
     settings_notify: '🔔 컴백 알림',
     settings_tz: '🌍 시간대',
-    settings_theme: '🎨 테마: 핑크퍼플 그라데이션',
+    settings_theme: '🎨 테마: 크림 & 페이퍼',
     settings_email: '📬 이메일',
     footer_1: '프로토타입 데모 · 실제 그룹명 + 오리지널 이모지 아바타 (초상권 리스크 없음)',
     footer_2: '데이터 출처 · Soompi / Billboard / allkpop / kprofiles / Ticketmaster / Wikipedia',
@@ -1532,7 +1544,7 @@ const I18N = {
     tz_cn: '🇨🇳 China',
     tz_useast: '🇺🇸 EE.UU. Este',
     tz_uswest: '🇺🇸 EE.UU. Oeste',
-    banner: '📡 <b>Datos reales</b> · 33 grupos · 41 eventos · Soporte multizona horaria (KR/CN/US) · Fuentes: Soompi / Billboard / allkpop / kprofiles / Ticketmaster · Actualizado 2026/04/22',
+    banner: '📡 <b>Datos reales</b> · 33 grupos · 41 eventos · Soporte multizona horaria (KR/CN/US) · Fuentes: Soompi / Billboard / allkpop / kprofiles / Ticketmaster · Actualizado 2026/04/21',
     hero_next_prefix: 'Próximo regreso: ',
     hero_left: 'en',
     hero_days: 'días',
@@ -1564,7 +1576,7 @@ const I18N = {
     settings_title: '⚙️ Ajustes',
     settings_notify: '🔔 Alertas de regreso',
     settings_tz: '🌍 Zona horaria',
-    settings_theme: '🎨 Tema: Degradado rosa-púrpura',
+    settings_theme: '🎨 Tema: Crema minimalista',
     settings_email: '📬 Correo',
     footer_1: 'Prototipo del producto · Nombres reales de grupos + avatares emoji originales (sin riesgo de derechos de imagen)',
     footer_2: 'Fuentes de datos · Soompi / Billboard / allkpop / kprofiles / Ticketmaster / Wikipedia',
