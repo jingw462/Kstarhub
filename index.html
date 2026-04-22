@@ -290,14 +290,15 @@
     font-weight: 600;
   }
 
-  /* data source banner */
+  /* data source banner (now at page bottom) */
   .data-banner {
     background: linear-gradient(120deg, #fff4d3, #ffd6e7);
     padding: 12px 16px;
     border-radius: 14px;
     font-size: 12px;
     color: var(--ink);
-    margin-bottom: 16px;
+    margin: 32px auto 14px;
+    max-width: 940px;
     line-height: 1.6;
   }
   .data-banner b { color: var(--accent-2); }
@@ -384,6 +385,50 @@
     color: #fff;
   }
 
+  /* search box */
+  .search-box {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    padding: 0 14px;
+    margin-bottom: 14px;
+    gap: 10px;
+  }
+  .search-icon {
+    font-size: 16px;
+    opacity: 0.6;
+  }
+  .search-box input {
+    flex: 1;
+    padding: 12px 0;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    background: transparent;
+    font-family: inherit;
+    color: var(--ink);
+  }
+  .search-box input::placeholder {
+    color: var(--ink-soft);
+    font-size: 13px;
+  }
+  .search-clear {
+    background: #f3ecff;
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-size: 11px;
+    cursor: pointer;
+    color: var(--ink-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .search-clear:hover { background: #e9dcff; }
+
   /* timezone selector */
   .tz-row {
     display: flex; align-items: center;
@@ -411,6 +456,303 @@
     background: linear-gradient(120deg, #ff6fb5, #8a5cf6);
     color: #fff;
   }
+  .lang-btn {
+    padding: 5px 12px;
+    border-radius: 16px;
+    border: none;
+    background: #f3ecff;
+    color: var(--ink-soft);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .lang-btn.active {
+    background: linear-gradient(120deg, #8a5cf6, #4ecdc4);
+    color: #fff;
+  }
+
+  /* ===== Top-right header controls (dropdowns) ===== */
+  .header-ctrl {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+  }
+  .dropdown { position: relative; }
+  .dd-trigger {
+    background: rgba(255,255,255,0.22);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.38);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 7px 12px;
+    border-radius: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: background 0.18s;
+    white-space: nowrap;
+  }
+  .dd-trigger:hover { background: rgba(255,255,255,0.34); }
+  .dd-caret { font-size: 9px; opacity: 0.85; margin-left: 1px; }
+  .dd-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 12px 28px rgba(43,26,61,0.22);
+    min-width: 140px;
+    padding: 5px;
+    display: none;
+    z-index: 11;
+  }
+  .dropdown.open .dd-menu { display: block; }
+  .dd-item {
+    padding: 8px 12px;
+    border-radius: 8px;
+    color: var(--ink);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    user-select: none;
+  }
+  .dd-item:hover { background: #f3ecff; }
+  .dd-item.active {
+    background: linear-gradient(120deg, #ff6fb5, #8a5cf6);
+    color: #fff;
+  }
+  @media (max-width: 520px) {
+    .header-ctrl { top: 14px; right: 12px; gap: 6px; }
+    .dd-trigger { padding: 6px 10px; font-size: 11px; }
+    .dd-menu { min-width: 130px; }
+    .dd-item { font-size: 12px; padding: 7px 10px; }
+  }
+
+  /* ===== Group detail modal ===== */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(43, 26, 61, 0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    padding: 20px;
+    animation: modalFadeIn 0.2s ease-out;
+  }
+  .modal-overlay.show { display: flex; }
+  @keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .modal {
+    background: #fff;
+    border-radius: 22px;
+    width: 100%;
+    max-width: 520px;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.3);
+    animation: modalSlideUp 0.28s cubic-bezier(.2,.9,.3,1);
+  }
+  @keyframes modalSlideUp {
+    from { opacity: 0; transform: translateY(20px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .modal-header {
+    padding: 24px 22px 16px;
+    border-radius: 22px 22px 0 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .modal-close {
+    position: absolute;
+    top: 12px; right: 14px;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.6);
+    color: var(--ink);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+  }
+  .modal-close:hover { background: #fff; }
+  .modal-avatar {
+    width: 66px; height: 66px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  .modal-title-block { flex: 1; min-width: 0; }
+  .modal-name {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+  .modal-company {
+    font-size: 12px;
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+  .modal-body {
+    padding: 8px 22px 22px;
+  }
+  .modal-meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .modal-meta-item {
+    background: #f8f3ff;
+    border-radius: 12px;
+    padding: 10px 12px;
+  }
+  .modal-meta-label {
+    font-size: 10px;
+    color: var(--ink-soft);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 3px;
+  }
+  .modal-meta-value {
+    font-size: 13px;
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .modal-intro {
+    background: linear-gradient(120deg, #fff4f8, #f3ecff);
+    border-radius: 12px;
+    padding: 14px 14px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin-bottom: 18px;
+  }
+  .modal-section-title {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--ink);
+    margin: 10px 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .modal-event-list { display: flex; flex-direction: column; gap: 8px; }
+  .modal-event {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: #f8f5ff;
+    border-radius: 12px;
+    border-left: 3px solid var(--accent-2);
+  }
+  .modal-event-date {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--accent-2);
+    min-width: 58px;
+  }
+  .modal-event-title {
+    flex: 1;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  .modal-event-tag {
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-weight: 700;
+  }
+  .modal-event-tag.comeback { background: #ffe0ec; color: #d6336c; }
+  .modal-event-tag.concert { background: #e0f2ff; color: #1864ab; }
+  .modal-event-tag.festival { background: #fff5d6; color: #c2882d; }
+  .modal-event-tag.fanmeet { background: #e5ffe8; color: #2f9e44; }
+  .modal-empty {
+    text-align: center;
+    font-size: 12px;
+    color: var(--ink-soft);
+    padding: 16px;
+  }
+  .modal-follow-btn {
+    width: 100%;
+    margin-top: 16px;
+    padding: 12px;
+    border: none;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: linear-gradient(120deg, #ff6fb5, #8a5cf6);
+    color: #fff;
+  }
+  .modal-follow-btn.following {
+    background: #f3ecff;
+    color: var(--accent-2);
+  }
+  .modal-link-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .modal-link-btn {
+    flex: 1;
+    min-width: 120px;
+    padding: 10px 12px;
+    border: 1px solid #e8def8;
+    border-radius: 12px;
+    background: #fff;
+    color: var(--accent-2);
+    font-size: 12.5px;
+    font-weight: 700;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.18s;
+    cursor: pointer;
+  }
+  .modal-link-btn:hover {
+    background: linear-gradient(120deg, #ff6fb5, #8a5cf6);
+    color: #fff;
+    border-color: transparent;
+    transform: translateY(-1px);
+  }
+  .modal-link-btn.disabled {
+    color: var(--ink-soft);
+    background: #f5f0ff;
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.7;
+  }
 
   /* ===== Toast ===== */
   .toast {
@@ -427,6 +769,87 @@
     z-index: 99;
   }
   .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ===== News tab (auto-updated) ===== */
+  .news-meta-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+    padding: 10px 14px;
+    background: linear-gradient(120deg, #fff4d3, #ffd6e7);
+    border-radius: 12px;
+    font-size: 12px;
+    color: var(--ink);
+  }
+  .news-meta-bar b { color: var(--accent-2); }
+  .news-refresh-hint { font-size: 11px; color: var(--ink-soft); }
+  .news-list { display: flex; flex-direction: column; gap: 10px; }
+  .news-item {
+    display: block;
+    padding: 14px 16px;
+    background: #fff;
+    border-radius: 14px;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--accent);
+    transition: transform 0.18s, box-shadow 0.18s;
+  }
+  .news-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+    border-left-color: var(--accent-2);
+  }
+  .news-title {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .news-desc {
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .news-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--ink-soft);
+    align-items: center;
+  }
+  .news-source {
+    font-weight: 600;
+    color: var(--accent-2);
+  }
+  .news-group-tag {
+    background: #f3ecff;
+    color: var(--accent-2);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 10px;
+  }
+  .news-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--ink-soft);
+    font-size: 13px;
+  }
+  .news-loading {
+    text-align: center;
+    padding: 40px;
+    color: var(--ink-soft);
+    font-size: 13px;
+  }
 
   /* ===== Footer note ===== */
   .footer-note {
@@ -446,7 +869,31 @@
     <div class="logo-badge">✨</div>
     <div>
       K-Star Hub
-      <div class="tagline">一站式 K-pop 追星日历 · 回归 / 演唱会 / 音乐节</div>
+      <div class="tagline" data-i18n="tagline">一站式 K-pop 追星日历 · 回归 / 演唱会 / 音乐节</div>
+    </div>
+  </div>
+  <div class="header-ctrl">
+    <div class="dropdown" id="lang-dd">
+      <button class="dd-trigger" id="lang-trigger" type="button">
+        <span>🌐</span><span id="lang-current">中文</span><span class="dd-caret">▾</span>
+      </button>
+      <div class="dd-menu" role="menu">
+        <div class="dd-item" data-lang="zh" role="menuitem">🇨🇳 中文</div>
+        <div class="dd-item" data-lang="en" role="menuitem">🇺🇸 English</div>
+        <div class="dd-item" data-lang="ko" role="menuitem">🇰🇷 한국어</div>
+        <div class="dd-item" data-lang="es" role="menuitem">🇲🇽 Español</div>
+      </div>
+    </div>
+    <div class="dropdown" id="tz-dd">
+      <button class="dd-trigger" id="tz-trigger" type="button">
+        <span>🌍</span><span id="tz-current">KST</span><span class="dd-caret">▾</span>
+      </button>
+      <div class="dd-menu" role="menu">
+        <div class="dd-item" data-tz="KST" role="menuitem"><span data-i18n="tz_kr">🇰🇷 韩国</span> · KST</div>
+        <div class="dd-item" data-tz="CST" role="menuitem"><span data-i18n="tz_cn">🇨🇳 中国</span> · CST</div>
+        <div class="dd-item" data-tz="EST" role="menuitem"><span data-i18n="tz_useast">🇺🇸 美东</span> · EDT</div>
+        <div class="dd-item" data-tz="PST" role="menuitem"><span data-i18n="tz_uswest">🇺🇸 美西</span> · PDT</div>
+      </div>
     </div>
   </div>
 </header>
@@ -455,65 +902,71 @@
 
   <!-- Tabs -->
   <div class="tabs">
-    <button class="tab active" data-tab="home">🏠 主页</button>
-    <button class="tab" data-tab="calendar">📅 日历</button>
-    <button class="tab" data-tab="groups">💜 团体</button>
-    <button class="tab" data-tab="me">👤 我的</button>
-  </div>
-
-  <!-- Timezone selector -->
-  <div class="tz-row">
-    <span class="tz-label">🌍 时区</span>
-    <button class="tz-btn active" data-tz="KST">🇰🇷 韩国</button>
-    <button class="tz-btn" data-tz="CST">🇨🇳 中国</button>
-    <button class="tz-btn" data-tz="EST">🇺🇸 美东</button>
-    <button class="tz-btn" data-tz="PST">🇺🇸 美西</button>
+    <button class="tab active" data-tab="home" data-i18n="tab_home">🏠 主页</button>
+    <button class="tab" data-tab="calendar" data-i18n="tab_calendar">📅 日历</button>
+    <button class="tab" data-tab="groups" data-i18n="tab_groups">💜 团体</button>
+    <button class="tab" data-tab="news" data-i18n="tab_news">📰 最新</button>
+    <button class="tab" data-tab="me" data-i18n="tab_me">👤 我的</button>
   </div>
 
   <!-- Home -->
   <section class="section active" id="home">
-    <div class="data-banner">
-      📡 <b>真实数据</b> · 32 个热门团体、44 条日程 · 支持时区切换（KR/CN/US）· 数据源：Soompi / Billboard / allkpop / kprofiles / Ticketmaster · 抓取于 2026/04/17
-    </div>
-    <div class="hero-card">
-      <div class="hero-avatar" style="background:#e6d7c3;">🐺</div>
+    <div class="hero-card" id="hero-card">
+      <div class="hero-avatar" id="hero-avatar" style="background:#e6d7c3;">🐺</div>
       <div class="hero-info">
-        <div class="hero-title">下一个回归：&TEAM 3rd EP "We on Fire"</div>
-        <div class="hero-sub">Comeback · 2026/04/21 18:00 KST</div>
+        <div class="hero-title" id="hero-title">下一个回归：&TEAM 3rd EP "We on Fire"</div>
+        <div class="hero-sub" id="hero-sub">Comeback · 2026/04/21 18:00 KST</div>
         <div class="countdown">
-          <span>剩余</span>
+          <span data-i18n="hero_left">剩余</span>
           <span class="countdown-num" id="countdown">4</span>
-          <span>天</span>
+          <span data-i18n="hero_days">天</span>
         </div>
       </div>
     </div>
 
-    <h2>🔥 本周热门 <small>· 粉丝关注最多</small></h2>
+    <h2><span data-i18n="hot_title">🔥 本周热门</span> <small data-i18n="hot_small">· 粉丝关注最多</small></h2>
     <div class="event-list" id="home-events"></div>
   </section>
 
   <!-- Calendar -->
   <section class="section" id="calendar">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search-input" data-i18n-placeholder="search_placeholder" placeholder="搜索团体名 或 日程标题（如 BTS、回归、World Tour）...">
+      <button class="search-clear" id="search-clear" style="display:none;">✕</button>
+    </div>
     <div class="filters" id="filters">
-      <button class="chip active" data-filter="all">全部</button>
-      <button class="chip" data-filter="comeback">💿 回归</button>
-      <button class="chip" data-filter="concert">🎤 演唱会</button>
-      <button class="chip" data-filter="festival">🎪 音乐节</button>
-      <button class="chip" data-filter="fanmeet">💌 Fan Meet</button>
+      <button class="chip active" data-filter="all" data-i18n="filter_all">全部</button>
+      <button class="chip" data-filter="comeback" data-i18n="filter_comeback">💿 回归</button>
+      <button class="chip" data-filter="concert" data-i18n="filter_concert">🎤 演唱会</button>
+      <button class="chip" data-filter="festival" data-i18n="filter_festival">🎪 音乐节</button>
+      <button class="chip" data-filter="fanmeet" data-i18n="filter_fanmeet">💌 Fan Meet</button>
     </div>
     <div class="event-list" id="all-events"></div>
   </section>
 
   <!-- Groups -->
   <section class="section" id="groups">
-    <h2>💜 团体库 <small>· 点击关注</small></h2>
+    <h2><span data-i18n="groups_title">💜 团体库</span> <small data-i18n="groups_small">· 点击关注</small></h2>
     <div class="filters" id="gender-filters">
-      <button class="chip active" data-gender="all">全部</button>
-      <button class="chip" data-gender="boy">🧑 男团</button>
-      <button class="chip" data-gender="girl">👩 女团</button>
-      <button class="chip" data-gender="coed">💞 混合团</button>
+      <button class="chip active" data-gender="all" data-i18n="gender_all">全部</button>
+      <button class="chip" data-gender="boy" data-i18n="gender_boy">🧑 男团</button>
+      <button class="chip" data-gender="girl" data-i18n="gender_girl">👩 女团</button>
+      <button class="chip" data-gender="coed" data-i18n="gender_coed">💞 混合团</button>
     </div>
     <div class="group-grid" id="group-grid"></div>
+  </section>
+
+  <!-- News (auto-updated daily by GitHub Actions) -->
+  <section class="section" id="news">
+    <h2><span data-i18n="news_title">📰 最新 K-pop 消息</span></h2>
+    <div class="news-meta-bar">
+      <div><b data-i18n="news_auto">🤖 每日自动抓取</b> · <span data-i18n="news_sources">Soompi / allkpop / Reddit</span></div>
+      <div class="news-refresh-hint" id="news-updated-at"></div>
+    </div>
+    <div class="news-list" id="news-list">
+      <div class="news-loading" data-i18n="news_loading">读取最新消息中...</div>
+    </div>
   </section>
 
   <!-- Me -->
@@ -521,29 +974,29 @@
     <div class="hero-card">
       <div class="hero-avatar" style="background:#e9dcff;">🌟</div>
       <div class="hero-info">
-        <div class="hero-title">Hi, Jing！</div>
-        <div class="hero-sub">追星等级 Lv.3 · 星光值 280</div>
+        <div class="hero-title" data-i18n="me_hi">Hi, Jing！</div>
+        <div class="hero-sub" data-i18n="me_level">追星等级 Lv.3 · 星光值 280</div>
       </div>
     </div>
 
     <div class="stats-grid">
       <div class="stat-card">
         <div class="stat-num" id="star-count">0</div>
-        <div class="stat-label">收藏日程</div>
+        <div class="stat-label" data-i18n="stat_star">收藏日程</div>
       </div>
       <div class="stat-card">
         <div class="stat-num" id="group-count">0</div>
-        <div class="stat-label">关注团体</div>
+        <div class="stat-label" data-i18n="stat_group">关注团体</div>
       </div>
       <div class="stat-card">
         <div class="stat-num">12</div>
-        <div class="stat-label">连续签到</div>
+        <div class="stat-label" data-i18n="stat_streak">连续签到</div>
       </div>
     </div>
 
     <div class="sticker-row">
       <div class="sticker-title">
-        <span>🎁 我的贴纸收藏</span>
+        <span data-i18n="sticker_title">🎁 我的贴纸收藏</span>
         <span style="font-size:11px;color:var(--ink-soft);">6 / 12</span>
       </div>
       <div class="sticker-grid">
@@ -563,22 +1016,59 @@
     </div>
 
     <div class="sticker-row">
-      <div class="sticker-title"><span>⚙️ 设置</span></div>
+      <div class="sticker-title"><span data-i18n="settings_title">⚙️ 设置</span></div>
       <div style="font-size:13px;color:var(--ink-soft);line-height:1.9;">
-        🔔 开启回归提醒<br>
-        🌍 时区：KST (Seoul)<br>
-        🎨 主题：粉紫渐变<br>
-        📬 邮箱：jingw462@gmail.com
+        <span data-i18n="settings_notify">🔔 开启回归提醒</span><br>
+        <span data-i18n="settings_tz">🌍 时区</span>: KST (Seoul)<br>
+        <span data-i18n="settings_theme">🎨 主题：粉紫渐变</span><br>
+        <span data-i18n="settings_email">📬 邮箱</span>: jingw462@gmail.com
       </div>
     </div>
   </section>
 
 </div>
 
+<div class="container" style="padding-top:0;">
+  <div class="data-banner" data-i18n-html="banner">
+    📡 <b>真实数据</b> · 33 个热门团体、41 条日程 · 支持时区切换（KR/CN/US）· 数据源：Soompi / Billboard / allkpop / kprofiles / Ticketmaster · 更新于 2026/04/21
+  </div>
+</div>
+
 <div class="footer-note">
-  本页为产品原型 Demo · 使用真实团体名称 + 原创卡通emoji形象，避免肖像权风险<br>
-  数据来源 · Soompi / Billboard / allkpop / kprofiles / Ticketmaster / Wikipedia (公开报道)<br>
-  Powered by K-Star Hub · 2026
+  <span data-i18n="footer_1">本页为产品原型 Demo · 使用真实团体名称 + 原创卡通emoji形象，避免肖像权风险</span><br>
+  <span data-i18n="footer_2">数据来源 · Soompi / Billboard / allkpop / kprofiles / Ticketmaster / Wikipedia (公开报道)</span><br>
+  <span data-i18n="footer_3">Powered by K-Star Hub · 2026</span>
+</div>
+
+<!-- Group detail modal -->
+<div class="modal-overlay" id="group-modal">
+  <div class="modal" id="modal-inner">
+    <div class="modal-header" id="modal-header">
+      <button class="modal-close" id="modal-close" aria-label="Close">✕</button>
+      <div class="modal-avatar" id="modal-avatar">💜</div>
+      <div class="modal-title-block">
+        <div class="modal-name" id="modal-name"></div>
+        <div class="modal-company" id="modal-company"></div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-meta-grid">
+        <div class="modal-meta-item">
+          <div class="modal-meta-label" id="modal-label-debut">出道日期</div>
+          <div class="modal-meta-value" id="modal-debut"></div>
+        </div>
+        <div class="modal-meta-item">
+          <div class="modal-meta-label" id="modal-label-style">风格</div>
+          <div class="modal-meta-value" id="modal-style"></div>
+        </div>
+      </div>
+      <div class="modal-intro" id="modal-intro"></div>
+      <div class="modal-link-row" id="modal-links"></div>
+      <div class="modal-section-title" id="modal-events-title">📅 近期日程</div>
+      <div class="modal-event-list" id="modal-events"></div>
+      <button class="modal-follow-btn" id="modal-follow"></button>
+    </div>
+  </div>
 </div>
 
 <div class="toast" id="toast">已收藏 ⭐</div>
@@ -588,45 +1078,83 @@
 // 数据来源：Soompi、Billboard、allkpop、kprofiles、Wikipedia、Ticketmaster
 // 抓取时间：2026/04/17 · 使用真实团体名 + 原创emoji形象
 const groups = [
-  { id: 'bts',    name: 'BTS',          company: 'HYBE / BIGHIT',    color: '#9b51e0', emoji: '💜', bg: '#e9dcff', gender: 'boy' },
-  { id: 'bp',     name: 'BLACKPINK',    company: 'YG Entertainment', color: '#ff3d9a', emoji: '🖤', bg: '#ffd6e7', gender: 'girl' },
-  { id: 'nj',     name: 'NewJeans',     company: 'ADOR',             color: '#87ceeb', emoji: '🐰', bg: '#dbeafe', gender: 'girl' },
-  { id: 'aespa',  name: 'aespa',        company: 'SM Entertainment', color: '#2b2b2b', emoji: '🦋', bg: '#f3ecff', gender: 'girl' },
-  { id: 'svt',   name: 'SEVENTEEN',     company: 'HYBE / PLEDIS',    color: '#ffb5c5', emoji: '💎', bg: '#fce7f3', gender: 'boy' },
-  { id: 'skz',   name: 'Stray Kids',    company: 'JYP Entertainment',color: '#ff6b35', emoji: '⚡', bg: '#fff4d3', gender: 'boy' },
-  { id: 'twice', name: 'TWICE',         company: 'JYP Entertainment',color: '#ff82b2', emoji: '🍬', bg: '#ffe4f1', gender: 'girl' },
-  { id: 'ive',   name: 'IVE',           company: 'Starship Ent.',    color: '#4a6fa5', emoji: '💙', bg: '#dbeafe', gender: 'girl' },
-  { id: 'lsrfm', name: 'LE SSERAFIM',   company: 'HYBE / SOURCE',    color: '#e63946', emoji: '🔥', bg: '#ffd6d6', gender: 'girl' },
-  { id: 'ateez', name: 'ATEEZ',         company: 'KQ Entertainment', color: '#1a1a2e', emoji: '⚓', bg: '#d6deeb', gender: 'boy' },
-  { id: 'enh',   name: 'ENHYPEN',       company: 'HYBE / BELIFT',    color: '#4b0082', emoji: '🌙', bg: '#e0d4f0', gender: 'boy' },
-  { id: 'txt',   name: 'TXT',           company: 'HYBE / BIGHIT',    color: '#4ecdc4', emoji: '✨', bg: '#d1fae5', gender: 'boy' },
-  { id: 'zb1',   name: 'ZEROBASEONE',   company: 'WAKEONE',          color: '#00a0e9', emoji: '🌟', bg: '#d0e8ff', gender: 'boy' },
-  { id: 'itzy',  name: 'ITZY',          company: 'JYP Entertainment',color: '#ff4d6d', emoji: '🎯', bg: '#ffe0e6', gender: 'girl' },
-  { id: 'bm',    name: 'BABYMONSTER',   company: 'YG Entertainment', color: '#ff006e', emoji: '👾', bg: '#ffd6e7', gender: 'girl' },
-  { id: 'kol',   name: 'KISS OF LIFE',  company: 'S2 Entertainment', color: '#d62246', emoji: '💋', bg: '#ffd6e0', gender: 'girl' },
-  { id: 'nct',   name: 'NCT 127',       company: 'SM Entertainment', color: '#31a0a6', emoji: '🌆', bg: '#d1f0f2', gender: 'boy' },
-  { id: 'illit', name: 'ILLIT',         company: 'HYBE / BELIFT',    color: '#ff9eb4', emoji: '🍒', bg: '#ffe4ec', gender: 'girl' },
-  { id: 'tr',    name: 'TREASURE',      company: 'YG Entertainment', color: '#ffc107', emoji: '💛', bg: '#fff4cc', gender: 'boy' },
-  { id: 'rv',    name: 'Red Velvet',    company: 'SM Entertainment', color: '#c91e1e', emoji: '❤️', bg: '#ffd6d6', gender: 'girl' },
-  { id: 'mmm',   name: 'MAMAMOO',       company: 'RBW',              color: '#ff69b4', emoji: '🌺', bg: '#ffe0ee', gender: 'girl' },
-  { id: 'nmx',   name: 'NMIXX',         company: 'JYP Entertainment',color: '#6a0dad', emoji: '🌈', bg: '#e9d5ff', gender: 'girl' },
-  { id: 'p1h',   name: 'P1Harmony',     company: 'FNC Entertainment',color: '#1d3557', emoji: '🎸', bg: '#d6dde6', gender: 'boy' },
-  { id: 'atm',   name: '&TEAM',         company: 'HYBE Japan',       color: '#5c4033', emoji: '🐺', bg: '#e6d7c3', gender: 'boy' },
-  { id: 'crv',   name: 'Cravity',       company: 'Starship Ent.',    color: '#3a86ff', emoji: '🛡️', bg: '#d6e4ff', gender: 'boy' },
-  { id: 'bnd',   name: 'BOYNEXTDOOR',   company: 'HYBE / KOZ',       color: '#f4a261', emoji: '🚪', bg: '#ffe5cc', gender: 'boy' },
-  { id: 'riize', name: 'RIIZE',         company: 'SM Entertainment', color: '#0077b6', emoji: '🌊', bg: '#d0e8f2', gender: 'boy' },
-  { id: 'gidle', name: '(G)I-DLE',      company: 'Cube Entertainment',color: '#e63946', emoji: '👑', bg: '#ffd6d6', gender: 'girl' },
-  { id: 'exo',   name: 'EXO',           company: 'SM Entertainment', color: '#c0c0c0', emoji: '🌟', bg: '#e8e8e8', gender: 'boy' },
-  { id: 'ilt',   name: 'izna',          company: 'WAKEONE',          color: '#ff85a2', emoji: '💫', bg: '#ffd6e0', gender: 'girl' },
-  { id: 'kard',  name: 'KARD',          company: 'DSP Media',        color: '#ff4500', emoji: '♦️', bg: '#ffdac1', gender: 'coed' },
-  { id: 'akmu',  name: 'AKMU',          company: 'YG Entertainment', color: '#fca311', emoji: '🎵', bg: '#ffe8b3', gender: 'coed' },
+  { id: 'bts',    name: 'BTS',          company: 'HYBE / BIGHIT',    color: '#9b51e0', emoji: '💜', bg: '#e9dcff', gender: 'boy',  debut: '2013-06-13', style: 'Hip-hop · Pop · EDM',          weverse: 'bts' },
+  { id: 'bp',     name: 'BLACKPINK',    company: 'YG Entertainment', color: '#ff3d9a', emoji: '🖤', bg: '#ffd6e7', gender: 'girl', debut: '2016-08-08', style: 'Hip-hop · EDM · Pop' },
+  { id: 'nj',     name: 'NewJeans',     company: 'ADOR',             color: '#87ceeb', emoji: '🐰', bg: '#dbeafe', gender: 'girl', debut: '2022-07-22', style: 'Bubblegum pop · R&B · D&B',    weverse: 'newjeans' },
+  { id: 'aespa',  name: 'aespa',        company: 'SM Entertainment', color: '#2b2b2b', emoji: '🦋', bg: '#f3ecff', gender: 'girl', debut: '2020-11-17', style: 'Dance pop · EDM · Future bass' },
+  { id: 'svt',   name: 'SEVENTEEN',     company: 'HYBE / PLEDIS',    color: '#ffb5c5', emoji: '💎', bg: '#fce7f3', gender: 'boy',  debut: '2015-05-26', style: 'K-pop · Hip-hop · R&B',         weverse: 'seventeen' },
+  { id: 'skz',   name: 'Stray Kids',    company: 'JYP Entertainment',color: '#ff6b35', emoji: '⚡', bg: '#fff4d3', gender: 'boy',  debut: '2018-03-25', style: 'Hip-hop · EDM · Rock',           weverse: 'straykids' },
+  { id: 'twice', name: 'TWICE',         company: 'JYP Entertainment',color: '#ff82b2', emoji: '🍬', bg: '#ffe4f1', gender: 'girl', debut: '2015-10-20', style: 'Bubblegum pop · Dance',          weverse: 'twice' },
+  { id: 'ive',   name: 'IVE',           company: 'Starship Ent.',    color: '#4a6fa5', emoji: '💙', bg: '#dbeafe', gender: 'girl', debut: '2021-12-01', style: 'Dance pop · K-pop',              weverse: 'ive' },
+  { id: 'lsrfm', name: 'LE SSERAFIM',   company: 'HYBE / SOURCE',    color: '#e63946', emoji: '🔥', bg: '#ffd6d6', gender: 'girl', debut: '2022-05-02', style: 'Hip-hop · Dance pop',            weverse: 'lesserafim' },
+  { id: 'ateez', name: 'ATEEZ',         company: 'KQ Entertainment', color: '#1a1a2e', emoji: '⚓', bg: '#d6deeb', gender: 'boy',  debut: '2018-10-24', style: 'EDM · Hip-hop · Moombahton',     weverse: 'ateez' },
+  { id: 'enh',   name: 'ENHYPEN',       company: 'HYBE / BELIFT',    color: '#4b0082', emoji: '🌙', bg: '#e0d4f0', gender: 'boy',  debut: '2020-11-30', style: 'Pop rock · Dance pop',           weverse: 'enhypen' },
+  { id: 'txt',   name: 'TXT',           company: 'HYBE / BIGHIT',    color: '#4ecdc4', emoji: '✨', bg: '#d1fae5', gender: 'boy',  debut: '2019-03-04', style: 'Pop · Synth-pop · Rock',         weverse: 'txt' },
+  { id: 'zb1',   name: 'ZEROBASEONE',   company: 'WAKEONE',          color: '#00a0e9', emoji: '🌟', bg: '#d0e8ff', gender: 'boy',  debut: '2023-07-10', style: 'Dance pop · K-pop',              weverse: 'zb1' },
+  { id: 'itzy',  name: 'ITZY',          company: 'JYP Entertainment',color: '#ff4d6d', emoji: '🎯', bg: '#ffe0e6', gender: 'girl', debut: '2019-02-12', style: 'Dance pop · Hip-hop',            weverse: 'itzy' },
+  { id: 'bm',    name: 'BABYMONSTER',   company: 'YG Entertainment', color: '#ff006e', emoji: '👾', bg: '#ffd6e7', gender: 'girl', debut: '2023-11-27', style: 'Hip-hop · EDM · K-pop' },
+  { id: 'kol',   name: 'KISS OF LIFE',  company: 'S2 Entertainment', color: '#d62246', emoji: '💋', bg: '#ffd6e0', gender: 'girl', debut: '2023-07-05', style: 'R&B · Soul · Pop',               weverse: 'kissoflife' },
+  { id: 'nct',   name: 'NCT 127',       company: 'SM Entertainment', color: '#31a0a6', emoji: '🌆', bg: '#d1f0f2', gender: 'boy',  debut: '2016-07-07', style: 'Hip-hop · R&B · Experimental' },
+  { id: 'illit', name: 'ILLIT',         company: 'HYBE / BELIFT',    color: '#ff9eb4', emoji: '🍒', bg: '#ffe4ec', gender: 'girl', debut: '2024-03-25', style: 'Dance · Bubblegum pop',          weverse: 'illit' },
+  { id: 'tr',    name: 'TREASURE',      company: 'YG Entertainment', color: '#ffc107', emoji: '💛', bg: '#fff4cc', gender: 'boy',  debut: '2020-08-07', style: 'Dance pop · Hip-hop',            weverse: 'treasure' },
+  { id: 'rv',    name: 'Red Velvet',    company: 'SM Entertainment', color: '#c91e1e', emoji: '❤️', bg: '#ffd6d6', gender: 'girl', debut: '2014-08-01', style: 'R&B · Dance · Pop' },
+  { id: 'mmm',   name: 'MAMAMOO',       company: 'RBW',              color: '#ff69b4', emoji: '🌺', bg: '#ffe0ee', gender: 'girl', debut: '2014-06-18', style: 'R&B · Soul · Jazz' },
+  { id: 'nmx',   name: 'NMIXX',         company: 'JYP Entertainment',color: '#6a0dad', emoji: '🌈', bg: '#e9d5ff', gender: 'girl', debut: '2022-02-22', style: 'MIXX-POP · Dance · Hip-hop',     weverse: 'nmixx' },
+  { id: 'p1h',   name: 'P1Harmony',     company: 'FNC Entertainment',color: '#1d3557', emoji: '🎸', bg: '#d6dde6', gender: 'boy',  debut: '2020-10-28', style: 'Hip-hop · EDM · Rock',           weverse: 'p1harmony' },
+  { id: 'atm',   name: '&TEAM',         company: 'HYBE Japan',       color: '#5c4033', emoji: '🐺', bg: '#e6d7c3', gender: 'boy',  debut: '2022-12-07', style: 'J-pop · K-pop · Ballad',         weverse: 'andteam' },
+  { id: 'crv',   name: 'Cravity',       company: 'Starship Ent.',    color: '#3a86ff', emoji: '🛡️', bg: '#d6e4ff', gender: 'boy',  debut: '2020-04-14', style: 'Hip-hop · Dance pop',            weverse: 'cravity' },
+  { id: 'bnd',   name: 'BOYNEXTDOOR',   company: 'HYBE / KOZ',       color: '#f4a261', emoji: '🚪', bg: '#ffe5cc', gender: 'boy',  debut: '2023-05-30', style: 'Pop rock · R&B · Hip-hop',       weverse: 'boynextdoor' },
+  { id: 'riize', name: 'RIIZE',         company: 'SM Entertainment', color: '#0077b6', emoji: '🌊', bg: '#d0e8f2', gender: 'boy',  debut: '2023-09-04', style: 'Emotional pop · R&B' },
+  { id: 'gidle', name: '(G)I-DLE',      company: 'Cube Entertainment',color: '#e63946', emoji: '👑', bg: '#ffd6d6', gender: 'girl', debut: '2018-05-02', style: 'Dance · EDM · Hip-hop',          weverse: 'gidle' },
+  { id: 'exo',   name: 'EXO',           company: 'SM Entertainment', color: '#c0c0c0', emoji: '🌟', bg: '#e8e8e8', gender: 'boy',  debut: '2012-04-08', style: 'R&B · Dance · Hip-hop' },
+  { id: 'ilt',   name: 'izna',          company: 'WAKEONE',          color: '#ff85a2', emoji: '💫', bg: '#ffd6e0', gender: 'girl', debut: '2024-11-25', style: 'Dance pop · K-pop',              weverse: 'izna' },
+  { id: 'kard',  name: 'KARD',          company: 'DSP Media',        color: '#ff4500', emoji: '♦️', bg: '#ffdac1', gender: 'coed', debut: '2017-07-19', style: 'Latin pop · Dance · Tropical' },
+  { id: 'akmu',  name: 'AKMU',          company: 'YG Entertainment', color: '#fca311', emoji: '🎵', bg: '#ffe8b3', gender: 'coed', debut: '2014-04-07', style: 'Folk · Indie pop · Acoustic' },
+  { id: 'ctrs',  name: 'CORTIS',        company: 'HYBE / BIGHIT',    color: '#2c5f2d', emoji: '🌿', bg: '#d4e8d4', gender: 'boy',  debut: '2025-08-18', style: 'Hip-hop · Experimental pop · Trap', weverse: 'cortis' },
 ];
 
-// 所有事件均来自 2026/04/17 公开报道的真实日程
+// ===== Group intros (zh + en; ko/es fall back to en) =====
+const GROUP_INFO = {
+  bts:    { zh: '出道即改写韩流格局的 7 人传奇男团，2026 年携新专 ARIRANG 强势回归。', en: '7-member global juggernaut, back in 2026 after military hiatus with their 5th album ARIRANG.' },
+  bp:     { zh: '全球知名度最高的女团之一，流行+嘻哈+EDM 的舞台风格。', en: 'One of the most recognizable girl groups worldwide; pop-hip-hop-EDM hybrid.' },
+  nj:     { zh: '5 人极简 Y2K 风格女团，Easy Listening 流派的开创者，粉丝称 Bunnies。', en: '5-member Y2K-flavored group pioneering easy-listening K-pop; fandom "Bunnies".' },
+  aespa:  { zh: '4 人赛博概念女团，SM 虚拟世界观 KWANGYA 的核心组合。', en: '4-member cyber-concept group; core act of SM\'s KWANGYA universe.' },
+  svt:    { zh: '13 人自制作偶像团体，分 Hip-hop、Vocal、Performance 三个小分队。', en: '13-member "self-producing idols" split into Hip-hop, Vocal, and Performance units.' },
+  skz:    { zh: '8 人自创作男团，三位成员组成制作 team 3Racha 包办全团音乐。', en: '8-member self-writing group; internal production trio 3Racha produces all their music.' },
+  twice:  { zh: '9 人 JYP 国民女团，Bubblegum pop 代表，《Cheer Up》《TT》等国民热曲。', en: '9-member JYP group defining bubblegum K-pop; hits include Cheer Up, TT, Fancy.' },
+  ive:    { zh: '6 人 Starship 女团，"Y2K + Royal" 概念，主打曲《Love Dive》《I AM》。', en: '6-member Starship group with "Y2K royal" concept; hits Love Dive, After Like, I AM.' },
+  lsrfm:  { zh: 'HYBE 首个女团，"Unafraid" 女强人概念，代表曲《ANTIFRAGILE》《Perfect Night》。', en: 'HYBE\'s first girl group under the "Unafraid" concept; hits ANTIFRAGILE, Perfect Night.' },
+  ateez:  { zh: '8 人 KQ 男团，奇幻海盗世界观，粉丝称 ATINY，代表作《Wonderland》。', en: '8-member KQ group with pirate-fantasy lore; fandom "ATINY", hits Wonderland, Say My Name.' },
+  enh:    { zh: 'HYBE × CJ 选秀节目 I-LAND 诞生的 7 人男团，暗黑吸血鬼概念。', en: '7-member group born from I-LAND survival show; dark vampire aesthetic, BLOOD SAGA tour.' },
+  txt:    { zh: '5 人 HYBE 第二男团，BTS 师弟，青春奇幻概念。', en: '5-member HYBE "younger brothers" of BTS; youth-fantasy concept, hits 0X1=LOVESONG, Sugar Rush Ride.' },
+  zb1:    { zh: 'Mnet 选秀 Boys Planet 诞生的 9 人限定团，2 年半活动期。', en: '9-member limited group from Boys Planet survival show; 2.5-year activity period.' },
+  itzy:   { zh: '5 人 JYP 女团，"Self-love" 概念，代表曲《WANNABE》《Not Shy》。', en: '5-member JYP group known for "self-love" messages; hits WANNABE, Not Shy.' },
+  bm:     { zh: 'YG 7 年磨一剑的 7 人女团，BLACKPINK 师妹，代表作《SHEESH》。', en: 'YG\'s 7-member girl group (BLACKPINK\'s juniors); hit debut with SHEESH.' },
+  kol:    { zh: '4 人 R&B 女团，2023 年出道即爆红，被称为"下一个 BLACKPINK"。', en: '4-member R&B group that exploded on debut in 2023; dubbed "the next BLACKPINK".' },
+  nct:    { zh: 'SM NCT 系列的首尔分队，9 人男团，粉丝称 NCTzen。', en: 'Seoul-based unit of SM\'s NCT project; 9 members, fandom "NCTzen".' },
+  illit:  { zh: '2024 年 HYBE × BELIFT 推出的 5 人女团，"神秘少女" 概念。', en: '5-member HYBE x BELIFT girl group debuted in 2024; "magical girl" concept, hit MAGNETIC.' },
+  tr:     { zh: 'YG 10 人男团，YG Treasure Box 选秀诞生，韩日中成员组合。', en: '10-member YG group formed via YG Treasure Box; Korean/Japanese/Chinese lineup.' },
+  rv:     { zh: 'SM 5 人女团，"Red"（活泼）与 "Velvet"（性感）双概念，K-pop 元老级女团。', en: '5-member SM veteran group famous for dual "Red" (upbeat) vs "Velvet" (sultry) concept.' },
+  mmm:    { zh: '4 人实力派女团，R&B/Soul/Jazz 功底深厚，2014 年出道。', en: '4-member vocal powerhouse group; R&B/soul/jazz chops since 2014.' },
+  nmx:    { zh: 'JYP 6 人女团，自创 MIXX-POP 流派，代表作《Love Me Like This》。', en: 'JYP 6-member group with their own "MIXX-POP" genre; hit Love Me Like This.' },
+  p1h:    { zh: 'FNC 6 人男团，"Action K-pop" 概念，强视觉+高强度编舞。', en: 'FNC 6-member "Action K-pop" group known for intense choreography.' },
+  atm:    { zh: 'HYBE Japan 9 人男团，日韩中台成员，J-pop + K-pop 跨界。', en: 'HYBE Japan 9-member cross-border group (JP/KR/CN/TW); J-pop × K-pop hybrid.' },
+  crv:    { zh: 'Starship 9 人男团，少年感活力系，粉丝称 LUVITY。', en: 'Starship 9-member group with youthful energy; fandom "LUVITY".' },
+  bnd:    { zh: 'HYBE KOZ 6 人男团，Zico 亲手打造，Pop Rock + R&B 新曲风。', en: 'HYBE KOZ 6-member group produced by Zico; pop-rock + R&B sound.' },
+  riize:  { zh: 'SM 7 人男团，NCT 以来首个固定成员男团，"Emotional pop" 概念。', en: 'SM 7-member group — the first fixed-member boy group since NCT; "Emotional pop".' },
+  gidle:  { zh: 'Cube 5 人女团，全员自制作，主唱 Soyeon 包办大部分创作。', en: 'Cube 5-member self-producing group; Soyeon writes most of their music.' },
+  exo:    { zh: 'SM 传奇男团，巅峰时 12 人分韩中两组活动，现 9 人活动。', en: 'SM legendary 9-member (originally 12) group; dominated mid-2010s K-pop.' },
+  ilt:    { zh: 'Mnet I-LAND 2 诞生的 7 人限定女团，WAKEONE 出品。', en: '7-member limited girl group from I-LAND 2 survival show (WAKEONE).' },
+  kard:   { zh: 'DSP 4 人混合团，拉丁曲风为主，海外人气远高于韩国本土。', en: 'DSP 4-member co-ed group with Latin-pop sound; bigger abroad than in Korea.' },
+  akmu:   { zh: '由乐童音乐 AKMU 兄妹组成的 YG 二人组，民谣+流行曲风。', en: 'YG folk-pop sibling duo (brother & sister); consistently chart-topping ballads.' },
+  ctrs:   { zh: 'HYBE BIGHIT 2025 年推出的 5 人男团，BTS 师弟，实验性 Hip-hop + Trap。', en: '5-member HYBE BIGHIT group debuted Aug 2025 (BTS\'s new juniors); experimental hip-hop + trap sound.' },
+};
+
+// 所有事件均来自 2026/04/21 公开报道的真实日程
 const events = [
   // ===== 回归 Comebacks (已确认) =====
   { id: 1,  groupId: 'kol',   type: 'comeback', title: '"Who is she" 单曲',             date: '2026-04-06', time: '18:00 KST', location: '音源已上线' },
-  { id: 2,  groupId: 'atm',   type: 'comeback', title: '3rd EP "We on Fire"',           date: '2026-04-21', time: '18:00 KST', location: '音源全球上线', hot: true },
+  { id: 2,  groupId: 'atm',   type: 'comeback', title: '3rd EP "We on Fire"',           date: '2026-04-21', time: '18:00 KST', location: '音源已上线', hot: true },
   { id: 3,  groupId: 'lsrfm', type: 'comeback', title: 'Single Pre-release',            date: '2026-04-24', time: '18:00 KST', location: '音源全球上线', hot: true },
   { id: 4,  groupId: 'crv',   type: 'comeback', title: '"ReDeFINE"',                    date: '2026-04-29', time: '18:00 KST', location: '音源全球上线' },
   { id: 5,  groupId: 'bm',    type: 'comeback', title: '3rd Mini Album "CHOOM"',        date: '2026-05-04', time: '18:00 KST', location: '音源全球上线', hot: true },
@@ -664,10 +1192,24 @@ const events = [
   { id: 47, groupId: 'p1h',   type: 'festival', title: 'KCON LA 2026 · P1Harmony (Day 2)',date: '2026-08-15', time: '19:00',  location: 'Crypto.com Arena, LA' },
   { id: 48, groupId: 'txt',   type: 'festival', title: 'KCON LA 2026 · TXT (Day 3)',     date: '2026-08-16', time: '19:00',   location: 'Crypto.com Arena, LA', hot: true },
   { id: 49, groupId: 'tr',    type: 'festival', title: 'KCON LA 2026 · TREASURE (Day 1)',date: '2026-08-14', time: '19:00',   location: 'Crypto.com Arena, LA' },
+
+  // ===== 4/21 新增 · Added on 2026-04-21 =====
+  { id: 50, groupId: 'bts',   type: 'concert',  title: "BTS 'ARIRANG' · Tampa",           date: '2026-04-25', time: '19:00',   location: 'Raymond James Stadium, FL · 4 nights', hot: true },
+  { id: 51, groupId: 'ive',   type: 'concert',  title: "IVE 'SHOW WHAT I AM' · Osaka",    date: '2026-04-18', time: '18:00',   location: '大阪城Hall · Day 1' },
+  { id: 52, groupId: 'ive',   type: 'concert',  title: "IVE 'SHOW WHAT I AM' · Osaka",    date: '2026-04-19', time: '17:00',   location: '大阪城Hall · Day 2' },
+  { id: 53, groupId: 'ive',   type: 'concert',  title: "IVE 'SHOW WHAT I AM' · Manila",   date: '2026-04-25', time: '19:00',   location: 'Mall of Asia Arena, Philippines', hot: true },
+
+  // ===== CORTIS 首次回归 · GREENGREEN =====
+  { id: 60, groupId: 'ctrs',  type: 'comeback', title: '"REDRED" Pre-release',            date: '2026-04-20', time: '18:00 KST', location: '音源已上线', hot: true },
+  { id: 61, groupId: 'ctrs',  type: 'comeback', title: '2nd EP "GREENGREEN"',             date: '2026-05-04', time: '18:00 KST', location: '音源全球上线 · 6 tracks', hot: true },
 ];
 
-const typeNames = { comeback: '回归', concert: '演唱会', festival: '音乐节', fanmeet: 'Fan Meet' };
+function typeName(type) { return t('type_' + type); }
 const monthNames = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+
+// ===== Safe localStorage =====
+function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 
 // ===== State =====
 const state = {
@@ -676,7 +1218,435 @@ const state = {
   currentFilter: 'all',
   currentGender: 'all',
   currentTz: 'KST',
+  searchQuery: '',
+  lang: lsGet('kstarhub_lang') || 'zh',
 };
+
+// ===== i18n =====
+const I18N = {
+  zh: {
+    lang_label: '🌐 语言',
+    tagline: '一站式 K-pop 追星日历 · 回归 / 演唱会 / 音乐节',
+    tab_home: '🏠 主页',
+    tab_calendar: '📅 日历',
+    tab_groups: '💜 团体',
+    tab_news: '📰 最新',
+    tab_me: '👤 我的',
+    tz_label: '🌍 时区',
+    tz_kr: '🇰🇷 韩国',
+    tz_cn: '🇨🇳 中国',
+    tz_useast: '🇺🇸 美东',
+    tz_uswest: '🇺🇸 美西',
+    banner: '📡 <b>真实数据</b> · 33 个热门团体、41 条日程 · 支持时区切换（KR/CN/US）· 数据源：Soompi / Billboard / allkpop / kprofiles / Ticketmaster · 更新于 2026/04/21',
+    hero_next_prefix: '下一个回归：',
+    hero_left: '剩余',
+    hero_days: '天',
+    hot_title: '🔥 本周热门',
+    hot_small: '· 粉丝关注最多',
+    search_placeholder: '搜索团体名 或 日程标题（如 BTS、回归、World Tour）...',
+    filter_all: '全部',
+    filter_comeback: '💿 回归',
+    filter_concert: '🎤 演唱会',
+    filter_festival: '🎪 音乐节',
+    filter_fanmeet: '💌 Fan Meet',
+    groups_title: '💜 团体库',
+    groups_small: '· 点击关注',
+    gender_all: '全部',
+    gender_boy: '🧑 男团',
+    gender_girl: '👩 女团',
+    gender_coed: '💞 混合团',
+    follow_yes: '💜 已关注',
+    follow_no: '+ 关注',
+    tag_boy: '🧑 男团',
+    tag_girl: '👩 女团',
+    tag_coed: '💞 混合团',
+    me_hi: 'Hi, Jing！',
+    me_level: '追星等级 Lv.3 · 星光值 280',
+    stat_star: '收藏日程',
+    stat_group: '关注团体',
+    stat_streak: '连续签到',
+    sticker_title: '🎁 我的贴纸收藏',
+    settings_title: '⚙️ 设置',
+    settings_notify: '🔔 开启回归提醒',
+    settings_tz: '🌍 时区',
+    settings_theme: '🎨 主题：粉紫渐变',
+    settings_email: '📬 邮箱',
+    footer_1: '本页为产品原型 Demo · 使用真实团体名称 + 原创卡通emoji形象，避免肖像权风险',
+    footer_2: '数据来源 · Soompi / Billboard / allkpop / kprofiles / Ticketmaster / Wikipedia (公开报道)',
+    footer_3: 'Powered by K-Star Hub · 2026',
+    empty_events: '暂无该类型日程 🎐',
+    empty_groups: '暂无此类型团体 🎐',
+    empty_search_pre: '没找到包含',
+    empty_search_post: '的日程 🔎',
+    empty_search_tip: '试试别的关键词？',
+    type_comeback: '回归',
+    type_concert: '演唱会',
+    type_festival: '音乐节',
+    type_fanmeet: 'Fan Meet',
+    toast_unstarred: '已取消收藏',
+    toast_starred: '⭐ 已加入日程，回归前会提醒你～',
+    toast_unfollowed: '已取消关注',
+    toast_followed: '💜 已关注，解锁专属贴纸！',
+    toast_tz_prefix: '🌍 已切换到 ',
+    toast_lang: '🌐 已切换为中文',
+    modal_debut: '出道日期',
+    modal_style: '风格',
+    modal_events: '📅 近期日程',
+    modal_no_events: '暂无公开日程 · 敬请期待新消息',
+    modal_weverse: '🌐 Weverse 官方主页',
+    modal_weverse_none: '🌐 暂无 Weverse 主页',
+    modal_search: '🔎 搜索最新消息',
+    news_title: '📰 最新 K-pop 消息',
+    news_auto: '🤖 每日自动抓取',
+    news_sources: 'Soompi / allkpop / Reddit',
+    news_loading: '读取最新消息中...',
+    news_empty: '暂无匹配消息，明天再来看看吧～',
+    news_error: '读取失败 · 数据更新可能稍后恢复',
+    news_updated_at: '更新于 ',
+    tz_long: { KST: '韩国时间', CST: '中国时间', EST: '美东时间', PST: '美西时间' },
+    loc: {},
+    phrases: {},
+  },
+  en: {
+    lang_label: '🌐 Language',
+    tagline: 'All-in-one K-pop calendar · Comebacks / Concerts / Festivals',
+    tab_home: '🏠 Home',
+    tab_calendar: '📅 Calendar',
+    tab_groups: '💜 Groups',
+    tab_news: '📰 News',
+    tab_me: '👤 Me',
+    tz_label: '🌍 Timezone',
+    tz_kr: '🇰🇷 Korea',
+    tz_cn: '🇨🇳 China',
+    tz_useast: '🇺🇸 US East',
+    tz_uswest: '🇺🇸 US West',
+    banner: '📡 <b>Real data</b> · 33 groups · 41 events · Timezone support (KR/CN/US) · Sources: Soompi / Billboard / allkpop / kprofiles / Ticketmaster · Updated 2026/04/21',
+    hero_next_prefix: 'Next comeback: ',
+    hero_left: 'in',
+    hero_days: 'days',
+    hot_title: '🔥 Hot This Week',
+    hot_small: '· Most followed',
+    search_placeholder: 'Search by group or event (e.g. BTS, comeback, World Tour)...',
+    filter_all: 'All',
+    filter_comeback: '💿 Comeback',
+    filter_concert: '🎤 Concert',
+    filter_festival: '🎪 Festival',
+    filter_fanmeet: '💌 Fan Meet',
+    groups_title: '💜 Group Library',
+    groups_small: '· Tap to follow',
+    gender_all: 'All',
+    gender_boy: '🧑 Boy Groups',
+    gender_girl: '👩 Girl Groups',
+    gender_coed: '💞 Co-ed',
+    follow_yes: '💜 Following',
+    follow_no: '+ Follow',
+    tag_boy: '🧑 Boy Group',
+    tag_girl: '👩 Girl Group',
+    tag_coed: '💞 Co-ed',
+    me_hi: 'Hi, Jing!',
+    me_level: 'Fan Lv.3 · 280 Stars',
+    stat_star: 'Saved Events',
+    stat_group: 'Following',
+    stat_streak: 'Day Streak',
+    sticker_title: '🎁 My Stickers',
+    settings_title: '⚙️ Settings',
+    settings_notify: '🔔 Comeback notifications',
+    settings_tz: '🌍 Timezone',
+    settings_theme: '🎨 Theme: Pink-Purple Gradient',
+    settings_email: '📬 Email',
+    footer_1: 'Product prototype · Real group names + original emoji avatars (no portrait rights risk)',
+    footer_2: 'Data sources · Soompi / Billboard / allkpop / kprofiles / Ticketmaster / Wikipedia',
+    footer_3: 'Powered by K-Star Hub · 2026',
+    empty_events: 'No events in this category 🎐',
+    empty_groups: 'No groups in this category 🎐',
+    empty_search_pre: 'No events match',
+    empty_search_post: '🔎',
+    empty_search_tip: 'Try another keyword?',
+    type_comeback: 'Comeback',
+    type_concert: 'Concert',
+    type_festival: 'Festival',
+    type_fanmeet: 'Fan Meet',
+    toast_unstarred: 'Removed from saved',
+    toast_starred: "⭐ Saved! We'll remind you before it drops~",
+    toast_unfollowed: 'Unfollowed',
+    toast_followed: '💜 Followed — exclusive sticker unlocked!',
+    toast_tz_prefix: '🌍 Switched to ',
+    toast_lang: '🌐 Switched to English',
+    modal_debut: 'Debut date',
+    modal_style: 'Style',
+    modal_events: '📅 Upcoming events',
+    modal_no_events: 'No public events yet · Stay tuned',
+    modal_weverse: '🌐 Official Weverse',
+    modal_weverse_none: '🌐 No Weverse page',
+    modal_search: '🔎 Search latest news',
+    news_title: '📰 Latest K-pop News',
+    news_auto: '🤖 Auto-refreshed daily',
+    news_sources: 'Soompi / allkpop / Reddit',
+    news_loading: 'Loading latest news...',
+    news_empty: 'No matches right now — check back tomorrow!',
+    news_error: 'Failed to load · the feed may recover shortly',
+    news_updated_at: 'Updated ',
+    tz_long: { KST: 'Korea Time', CST: 'China Time', EST: 'US East Time', PST: 'US West Time' },
+    loc: {
+      '音源已上线': 'Streaming now',
+      '音源全球上线': 'Global streaming release',
+      '音源全球上线 · 日期待官方确认': 'Global release · Date TBC',
+    },
+    // ordered substring replacements applied to event title & location
+    phrases: {
+      '高阳综合运动场': 'Goyang Stadium',
+      '东京巨蛋': 'Tokyo Dome',
+      '首尔场': 'Seoul',
+      '首尔': 'Seoul',
+      '幕张': 'Makuhari',
+      '千叶': 'Chiba',
+      '户外舞台': 'Outdoor Stage',
+      '日期待官方确认': 'Date TBC',
+      '音源全球上线': 'Global streaming release',
+      '音源已上线': 'Streaming now',
+      '第2张正规专辑 (SM官宣)': '2nd Full Album (SM announced)',
+      '新专辑 (5月回归)': 'New album (May comeback)',
+      '5月新专辑': 'May new album',
+      '6月回归': 'June comeback',
+      'Re-Debut (5月)': 'Re-Debut (May)',
+      '单曲': 'Single',
+      '官宣': 'official',
+      '公开报道': 'public reports',
+    },
+  },
+  ko: {
+    lang_label: '🌐 언어',
+    tagline: '올인원 K-pop 캘린더 · 컴백 / 콘서트 / 페스티벌',
+    tab_home: '🏠 홈',
+    tab_calendar: '📅 캘린더',
+    tab_groups: '💜 그룹',
+    tab_news: '📰 뉴스',
+    tab_me: '👤 내 정보',
+    tz_label: '🌍 시간대',
+    tz_kr: '🇰🇷 한국',
+    tz_cn: '🇨🇳 중국',
+    tz_useast: '🇺🇸 미국 동부',
+    tz_uswest: '🇺🇸 미국 서부',
+    banner: '📡 <b>실시간 데이터</b> · 33팀 · 41개 일정 · 시간대 지원(KR/CN/US) · 출처: Soompi / Billboard / allkpop / kprofiles / Ticketmaster · 2026/04/21 업데이트',
+    hero_next_prefix: '다음 컴백: ',
+    hero_left: '남은',
+    hero_days: '일',
+    hot_title: '🔥 이번 주 핫',
+    hot_small: '· 팬 관심도 최고',
+    search_placeholder: '그룹명 또는 이벤트 검색 (예: BTS, 컴백, World Tour)...',
+    filter_all: '전체',
+    filter_comeback: '💿 컴백',
+    filter_concert: '🎤 콘서트',
+    filter_festival: '🎪 페스티벌',
+    filter_fanmeet: '💌 팬미팅',
+    groups_title: '💜 그룹 라이브러리',
+    groups_small: '· 탭하여 팔로우',
+    gender_all: '전체',
+    gender_boy: '🧑 보이그룹',
+    gender_girl: '👩 걸그룹',
+    gender_coed: '💞 혼성',
+    follow_yes: '💜 팔로우 중',
+    follow_no: '+ 팔로우',
+    tag_boy: '🧑 보이그룹',
+    tag_girl: '👩 걸그룹',
+    tag_coed: '💞 혼성',
+    me_hi: '안녕, Jing!',
+    me_level: '팬 레벨 3 · 스타라이트 280',
+    stat_star: '저장한 일정',
+    stat_group: '팔로우 그룹',
+    stat_streak: '연속 출석',
+    sticker_title: '🎁 내 스티커 컬렉션',
+    settings_title: '⚙️ 설정',
+    settings_notify: '🔔 컴백 알림',
+    settings_tz: '🌍 시간대',
+    settings_theme: '🎨 테마: 핑크퍼플 그라데이션',
+    settings_email: '📬 이메일',
+    footer_1: '프로토타입 데모 · 실제 그룹명 + 오리지널 이모지 아바타 (초상권 리스크 없음)',
+    footer_2: '데이터 출처 · Soompi / Billboard / allkpop / kprofiles / Ticketmaster / Wikipedia',
+    footer_3: 'Powered by K-Star Hub · 2026',
+    empty_events: '해당 카테고리에 일정이 없습니다 🎐',
+    empty_groups: '해당 카테고리에 그룹이 없습니다 🎐',
+    empty_search_pre: '검색 결과 없음:',
+    empty_search_post: '🔎',
+    empty_search_tip: '다른 키워드를 시도해 보세요',
+    type_comeback: '컴백',
+    type_concert: '콘서트',
+    type_festival: '페스티벌',
+    type_fanmeet: '팬미팅',
+    toast_unstarred: '저장 취소됨',
+    toast_starred: '⭐ 저장됨! 컴백 전에 알려드릴게요~',
+    toast_unfollowed: '팔로우 취소됨',
+    toast_followed: '💜 팔로우! 전용 스티커 획득!',
+    toast_tz_prefix: '🌍 변경됨: ',
+    toast_lang: '🌐 한국어로 전환됨',
+    modal_debut: '데뷔일',
+    modal_style: '장르',
+    modal_events: '📅 예정 일정',
+    modal_no_events: '공개된 일정이 없습니다 · 새 소식을 기다려 주세요',
+    modal_weverse: '🌐 공식 Weverse',
+    modal_weverse_none: '🌐 Weverse 페이지 없음',
+    modal_search: '🔎 최신 뉴스 검색',
+    news_title: '📰 최신 K-pop 뉴스',
+    news_auto: '🤖 매일 자동 업데이트',
+    news_sources: 'Soompi / allkpop / Reddit',
+    news_loading: '뉴스 로딩 중...',
+    news_empty: '지금은 일치하는 뉴스가 없어요 — 내일 다시 확인해 주세요!',
+    news_error: '로드 실패 · 잠시 후 다시 시도됩니다',
+    news_updated_at: '업데이트됨 ',
+    tz_long: { KST: '한국 시간', CST: '중국 시간', EST: '미국 동부', PST: '미국 서부' },
+    loc: {
+      '音源已上线': '음원 공개',
+      '音源全球上线': '글로벌 음원 공개',
+      '音源全球上线 · 日期待官方确认': '글로벌 음원 공개 · 날짜 미정',
+    },
+    phrases: {
+      '高阳综合运动场': '고양종합운동장',
+      '东京巨蛋': '도쿄돔',
+      '首尔场': '서울',
+      '首尔': '서울',
+      '幕张': '마쿠하리',
+      '千叶': '치바',
+      '户外舞台': '야외 스테이지',
+      '日期待官方确认': '날짜 미정',
+      '音源全球上线': '글로벌 음원 공개',
+      '音源已上线': '음원 공개',
+      '第2张正规专辑 (SM官宣)': '2집 정규 (SM 공식)',
+      '新专辑 (5月回归)': '신보 (5월 컴백)',
+      '5月新专辑': '5월 신보',
+      '6月回归': '6월 컴백',
+      'Re-Debut (5月)': 'Re-Debut (5월)',
+      '单曲': '싱글',
+      '官宣': '공식',
+    },
+  },
+  es: {
+    lang_label: '🌐 Idioma',
+    tagline: 'Calendario K-pop todo-en-uno · Regresos / Conciertos / Festivales',
+    tab_home: '🏠 Inicio',
+    tab_calendar: '📅 Calendario',
+    tab_groups: '💜 Grupos',
+    tab_news: '📰 Noticias',
+    tab_me: '👤 Mi perfil',
+    tz_label: '🌍 Zona horaria',
+    tz_kr: '🇰🇷 Corea',
+    tz_cn: '🇨🇳 China',
+    tz_useast: '🇺🇸 EE.UU. Este',
+    tz_uswest: '🇺🇸 EE.UU. Oeste',
+    banner: '📡 <b>Datos reales</b> · 33 grupos · 41 eventos · Soporte multizona horaria (KR/CN/US) · Fuentes: Soompi / Billboard / allkpop / kprofiles / Ticketmaster · Actualizado 2026/04/21',
+    hero_next_prefix: 'Próximo regreso: ',
+    hero_left: 'en',
+    hero_days: 'días',
+    hot_title: '🔥 Lo más popular esta semana',
+    hot_small: '· Los más seguidos',
+    search_placeholder: 'Buscar por grupo o evento (ej: BTS, regreso, World Tour)...',
+    filter_all: 'Todo',
+    filter_comeback: '💿 Regreso',
+    filter_concert: '🎤 Concierto',
+    filter_festival: '🎪 Festival',
+    filter_fanmeet: '💌 Fan Meet',
+    groups_title: '💜 Biblioteca de grupos',
+    groups_small: '· Toca para seguir',
+    gender_all: 'Todos',
+    gender_boy: '🧑 Grupos masculinos',
+    gender_girl: '👩 Grupos femeninos',
+    gender_coed: '💞 Mixtos',
+    follow_yes: '💜 Siguiendo',
+    follow_no: '+ Seguir',
+    tag_boy: '🧑 Chicos',
+    tag_girl: '👩 Chicas',
+    tag_coed: '💞 Mixto',
+    me_hi: '¡Hola, Jing!',
+    me_level: 'Fan Nv.3 · 280 Estrellas',
+    stat_star: 'Eventos guardados',
+    stat_group: 'Siguiendo',
+    stat_streak: 'Racha diaria',
+    sticker_title: '🎁 Mis stickers',
+    settings_title: '⚙️ Ajustes',
+    settings_notify: '🔔 Alertas de regreso',
+    settings_tz: '🌍 Zona horaria',
+    settings_theme: '🎨 Tema: Degradado rosa-púrpura',
+    settings_email: '📬 Correo',
+    footer_1: 'Prototipo del producto · Nombres reales de grupos + avatares emoji originales (sin riesgo de derechos de imagen)',
+    footer_2: 'Fuentes de datos · Soompi / Billboard / allkpop / kprofiles / Ticketmaster / Wikipedia',
+    footer_3: 'Powered by K-Star Hub · 2026',
+    empty_events: 'No hay eventos en esta categoría 🎐',
+    empty_groups: 'No hay grupos en esta categoría 🎐',
+    empty_search_pre: 'Sin resultados para',
+    empty_search_post: '🔎',
+    empty_search_tip: '¿Prueba otra palabra clave?',
+    type_comeback: 'Regreso',
+    type_concert: 'Concierto',
+    type_festival: 'Festival',
+    type_fanmeet: 'Fan Meet',
+    toast_unstarred: 'Eliminado de guardados',
+    toast_starred: '⭐ ¡Guardado! Te avisaremos antes del lanzamiento~',
+    toast_unfollowed: 'Dejaste de seguir',
+    toast_followed: '💜 ¡Siguiendo — sticker exclusivo desbloqueado!',
+    toast_tz_prefix: '🌍 Cambiado a ',
+    toast_lang: '🌐 Cambiado a Español',
+    modal_debut: 'Fecha de debut',
+    modal_style: 'Estilo',
+    modal_events: '📅 Próximos eventos',
+    modal_no_events: 'Sin eventos públicos por ahora · Mantente atento',
+    modal_weverse: '🌐 Weverse oficial',
+    modal_weverse_none: '🌐 Sin página de Weverse',
+    modal_search: '🔎 Buscar noticias recientes',
+    news_title: '📰 Últimas noticias de K-pop',
+    news_auto: '🤖 Actualización automática diaria',
+    news_sources: 'Soompi / allkpop / Reddit',
+    news_loading: 'Cargando últimas noticias...',
+    news_empty: 'Sin coincidencias por ahora — ¡vuelve mañana!',
+    news_error: 'Error al cargar · el servicio se recuperará pronto',
+    news_updated_at: 'Actualizado ',
+    tz_long: { KST: 'Hora de Corea', CST: 'Hora de China', EST: 'Hora EE.UU. Este', PST: 'Hora EE.UU. Oeste' },
+    loc: {
+      '音源已上线': 'Ya en streaming',
+      '音源全球上线': 'Lanzamiento mundial en streaming',
+      '音源全球上线 · 日期待官方确认': 'Lanzamiento mundial · Fecha por confirmar',
+    },
+    phrases: {
+      '高阳综合运动场': 'Estadio Goyang',
+      '东京巨蛋': 'Tokyo Dome',
+      '首尔场': 'Seúl',
+      '首尔': 'Seúl',
+      '幕张': 'Makuhari',
+      '千叶': 'Chiba',
+      '户外舞台': 'Escenario al aire libre',
+      '日期待官方确认': 'Fecha por confirmar',
+      '音源全球上线': 'Lanzamiento mundial en streaming',
+      '音源已上线': 'Ya en streaming',
+      '第2张正规专辑 (SM官宣)': '2.º álbum (anunciado por SM)',
+      '新专辑 (5月回归)': 'Nuevo álbum (regreso en mayo)',
+      '5月新专辑': 'Nuevo álbum de mayo',
+      '6月回归': 'Regreso en junio',
+      'Re-Debut (5月)': 'Re-Debut (mayo)',
+      '单曲': 'Sencillo',
+      '官宣': 'oficial',
+    },
+  },
+};
+
+function t(key) {
+  const v = I18N[state.lang][key];
+  return v !== undefined ? v : (I18N.zh[key] !== undefined ? I18N.zh[key] : key);
+}
+
+function tLoc(str) {
+  if (!str) return str;
+  const dict = I18N[state.lang];
+  // 1) exact match
+  if (dict.loc && dict.loc[str]) return dict.loc[str];
+  // 2) phrase-based substring replacement (for mixed strings like "东京巨蛋 · 2 nights")
+  let out = str;
+  if (dict.phrases) {
+    for (const [cn, tr] of Object.entries(dict.phrases)) {
+      out = out.split(cn).join(tr);
+    }
+  }
+  return out;
+}
+// Titles (album / event names) — same phrase substitution as locations
+function tTitle(str) { return tLoc(str); }
 
 // KST = UTC+9 is our reference. Offsets relative to KST:
 // CST (China) = UTC+8 => -1h from KST
@@ -730,13 +1700,13 @@ function buildEventCard(evt) {
       <div class="event-avatar" style="background:${g.bg};">${g.emoji}</div>
       <div class="event-body">
         <div class="event-title">
-          <span>${evt.title}</span>
-          <span class="tag ${evt.type}">${typeNames[evt.type]}</span>
+          <span>${tTitle(evt.title)}</span>
+          <span class="tag ${evt.type}">${typeName(evt.type)}</span>
         </div>
         <div class="event-meta">
           <span>💜 ${g.name}</span>
           <span>🕐 ${conv.timeStr}</span>
-          <span>📍 ${evt.location}</span>
+          <span>📍 ${tLoc(evt.location)}</span>
         </div>
       </div>
       <button class="star-btn ${starCls}" data-id="${evt.id}">${starred}</button>
@@ -751,10 +1721,25 @@ function renderHome() {
 
 function renderAllEvents() {
   const filter = state.currentFilter;
+  const q = (state.searchQuery || '').trim().toLowerCase();
   const sorted = [...events].sort((a, b) => new Date(a.date) - new Date(b.date));
-  const filtered = filter === 'all' ? sorted : sorted.filter(e => e.type === filter);
-  document.getElementById('all-events').innerHTML = filtered.map(buildEventCard).join('') ||
-    '<div style="text-align:center;padding:40px;color:var(--ink-soft);">暂无该类型日程 🎐</div>';
+  let filtered = filter === 'all' ? sorted : sorted.filter(e => e.type === filter);
+  if (q) {
+    filtered = filtered.filter(e => {
+      const g = getGroup(e.groupId);
+      const hay = [
+        e.title || '',
+        e.location || '',
+        g ? g.name : '',
+        g ? g.company : ''
+      ].join(' ').toLowerCase();
+      return hay.includes(q);
+    });
+  }
+  const emptyMsg = q
+    ? `<div style="text-align:center;padding:40px;color:var(--ink-soft);">${t('empty_search_pre')} "<b>${q}</b>" ${t('empty_search_post')}<br><span style="font-size:12px;">${t('empty_search_tip')}</span></div>`
+    : `<div style="text-align:center;padding:40px;color:var(--ink-soft);">${t('empty_events')}</div>`;
+  document.getElementById('all-events').innerHTML = filtered.map(buildEventCard).join('') || emptyMsg;
 }
 
 function renderGroups() {
@@ -762,22 +1747,167 @@ function renderGroups() {
   const filtered = gf === 'all' ? groups : groups.filter(g => g.gender === gf);
   document.getElementById('group-grid').innerHTML = filtered.map(g => {
     const followed = state.followed.has(g.id);
-    const gTag = g.gender === 'boy' ? '🧑 男团' : g.gender === 'girl' ? '👩 女团' : '💞 混合团';
+    const gTag = g.gender === 'boy' ? t('tag_boy') : g.gender === 'girl' ? t('tag_girl') : t('tag_coed');
     return `
       <div class="group-card" data-gid="${g.id}" style="border-top-color:${g.color};">
         <div class="group-avatar" style="background:${g.bg};">${g.emoji}</div>
         <div class="group-name">${g.name}</div>
         <div class="group-company">${g.company}</div>
         <div class="group-followers" style="font-size:10px;">${gTag}</div>
-        <div class="group-followers">${followed ? '💜 已关注' : '+ 关注'}</div>
+        <div class="group-followers">${followed ? t('follow_yes') : t('follow_no')}</div>
       </div>
     `;
-  }).join('') || '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--ink-soft);">暂无此类型团体 🎐</div>';
+  }).join('') || `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--ink-soft);">${t('empty_groups')}</div>`;
 }
 
 function renderProfile() {
   document.getElementById('star-count').textContent = state.starred.size;
   document.getElementById('group-count').textContent = state.followed.size;
+}
+
+// ===== News feed (loaded from news.json, auto-updated by GitHub Actions) =====
+let newsCache = null;
+
+function escapeHtml(s) {
+  return String(s || '').replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
+}
+
+function formatNewsDate(iso) {
+  try {
+    const d = new Date(iso);
+    const y = d.getFullYear();
+    const mo = String(d.getMonth()+1).padStart(2,'0');
+    const da = String(d.getDate()).padStart(2,'0');
+    return `${y}/${mo}/${da}`;
+  } catch (e) { return iso || ''; }
+}
+
+async function loadNews() {
+  const listEl = document.getElementById('news-list');
+  if (!listEl) return;
+  if (newsCache) { renderNews(newsCache); return; }
+  listEl.innerHTML = `<div class="news-loading">${t('news_loading')}</div>`;
+  try {
+    const res = await fetch('news.json?t=' + Date.now(), { cache: 'no-store' });
+    if (!res.ok) throw new Error('http ' + res.status);
+    const data = await res.json();
+    newsCache = data;
+    renderNews(data);
+  } catch (e) {
+    console.warn('news load failed:', e);
+    listEl.innerHTML = `<div class="news-empty">${t('news_error')}</div>`;
+  }
+}
+
+function renderNews(data) {
+  const listEl = document.getElementById('news-list');
+  const stampEl = document.getElementById('news-updated-at');
+  if (stampEl && data.generatedAt) {
+    stampEl.textContent = t('news_updated_at') + formatNewsDate(data.generatedAt);
+  }
+  if (!listEl) return;
+  const items = (data.items || []);
+  if (!items.length) {
+    listEl.innerHTML = `<div class="news-empty">${t('news_empty')}</div>`;
+    return;
+  }
+  listEl.innerHTML = items.map(n => `
+    <a class="news-item" href="${escapeHtml(n.link)}" target="_blank" rel="noopener noreferrer">
+      <div class="news-title">${escapeHtml(n.title)}</div>
+      ${n.description ? `<div class="news-desc">${escapeHtml(n.description)}</div>` : ''}
+      <div class="news-meta">
+        <span>🕐 ${formatNewsDate(n.date)}</span>
+        <span class="news-source">📡 ${escapeHtml(n.source)}</span>
+        ${(n.groups || []).slice(0, 4).map(g => `<span class="news-group-tag">${escapeHtml(g)}</span>`).join('')}
+      </div>
+    </a>
+  `).join('');
+}
+
+// ===== Group detail modal =====
+let currentModalGroupId = null;
+
+function openGroupModal(gid) {
+  const g = getGroup(gid);
+  if (!g) return;
+  currentModalGroupId = gid;
+
+  // Header: avatar + name + company
+  const header = document.getElementById('modal-header');
+  header.style.background = `linear-gradient(135deg, ${g.bg}, #fff)`;
+  const av = document.getElementById('modal-avatar');
+  av.textContent = g.emoji;
+  av.style.background = g.bg;
+  document.getElementById('modal-name').textContent = g.name;
+  document.getElementById('modal-company').textContent = g.company;
+
+  // Meta labels + values
+  document.getElementById('modal-label-debut').textContent = t('modal_debut');
+  document.getElementById('modal-label-style').textContent = t('modal_style');
+  document.getElementById('modal-debut').textContent = g.debut || '—';
+  document.getElementById('modal-style').textContent = g.style || '—';
+
+  // Intro (GROUP_INFO prefers current lang's zh/en, falls back to en)
+  const info = GROUP_INFO[gid] || {};
+  const introText =
+    (state.lang === 'zh' && info.zh) ? info.zh :
+    info.en || info.zh || '';
+  document.getElementById('modal-intro').textContent = introText;
+
+  // External links (Weverse + web search fallback)
+  const linksEl = document.getElementById('modal-links');
+  const searchQ = encodeURIComponent(g.name + ' kpop');
+  const searchUrl = `https://www.google.com/search?q=${searchQ}`;
+  const weverseBtn = g.weverse
+    ? `<a class="modal-link-btn" href="https://weverse.io/${g.weverse}" target="_blank" rel="noopener noreferrer">${t('modal_weverse')}</a>`
+    : `<span class="modal-link-btn disabled">${t('modal_weverse_none')}</span>`;
+  linksEl.innerHTML = `
+    ${weverseBtn}
+    <a class="modal-link-btn" href="${searchUrl}" target="_blank" rel="noopener noreferrer">${t('modal_search')}</a>
+  `;
+
+  // Events for this group
+  document.getElementById('modal-events-title').textContent = t('modal_events');
+  const myEvents = [...events]
+    .filter(e => e.groupId === gid)
+    .sort((a, b) => new Date(a.date) - new Date(b.date));
+  const now = new Date();
+  const upcoming = myEvents.filter(e => new Date(e.date) >= now);
+  const shown = upcoming.length ? upcoming : myEvents;
+  const listEl = document.getElementById('modal-events');
+  if (!shown.length) {
+    listEl.innerHTML = `<div class="modal-empty">${t('modal_no_events')}</div>`;
+  } else {
+    listEl.innerHTML = shown.slice(0, 8).map(e => {
+      const conv = toDisplayTime(e.date, e.time);
+      return `
+        <div class="modal-event">
+          <div class="modal-event-date">${conv.dateStr.slice(5)}</div>
+          <div class="modal-event-title">${tTitle(e.title)}</div>
+          <span class="modal-event-tag ${e.type}">${typeName(e.type)}</span>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // Follow button
+  const btn = document.getElementById('modal-follow');
+  const followed = state.followed.has(gid);
+  btn.textContent = followed ? t('follow_yes') : t('follow_no');
+  btn.classList.toggle('following', followed);
+  btn.dataset.gid = gid;
+
+  // Show overlay
+  document.getElementById('group-modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeGroupModal() {
+  document.getElementById('group-modal').classList.remove('show');
+  document.body.style.overflow = '';
+  currentModalGroupId = null;
 }
 
 function showToast(msg) {
@@ -788,13 +1918,29 @@ function showToast(msg) {
   window._toastT = setTimeout(() => t.classList.remove('show'), 1600);
 }
 
-// ===== Countdown =====
-function updateCountdown() {
-  const target = new Date('2026-04-21T18:00:00+09:00');
+// ===== Hero & Countdown (dynamic) =====
+function renderHero() {
+  // Find the next upcoming comeback (or any event if no comeback left)
   const now = new Date();
+  const upcoming = [...events]
+    .filter(e => new Date(e.date + 'T' + (e.time || '18:00').slice(0,5) + ':00+09:00') > now)
+    .sort((a, b) => new Date(a.date) - new Date(b.date));
+  const nextCB = upcoming.find(e => e.type === 'comeback') || upcoming[0];
+  if (!nextCB) return;
+  const g = getGroup(nextCB.groupId);
+  const title = document.getElementById('hero-title');
+  const sub = document.getElementById('hero-sub');
+  const avatar = document.getElementById('hero-avatar');
+  if (avatar) { avatar.textContent = g.emoji; avatar.style.background = g.bg; }
+  if (title) title.textContent = t('hero_next_prefix') + g.name + ' ' + tTitle(nextCB.title);
+  if (sub) sub.textContent = typeName(nextCB.type) + ' · ' + nextCB.date + ' ' + (nextCB.time || '');
+  // Countdown: days until
+  const target = new Date(nextCB.date + 'T' + (nextCB.time || '18:00').slice(0,5) + ':00+09:00');
   const diff = Math.max(0, Math.ceil((target - now) / (1000 * 60 * 60 * 24)));
   document.getElementById('countdown').textContent = diff;
 }
+// Keep old name for compat with setInterval
+function updateCountdown() { renderHero(); }
 
 // ===== Event Handlers =====
 document.querySelectorAll('.tab').forEach(tab => {
@@ -807,8 +1953,29 @@ document.querySelectorAll('.tab').forEach(tab => {
     if (id === 'me') renderProfile();
     if (id === 'calendar') renderAllEvents();
     if (id === 'groups') renderGroups();
+    if (id === 'news') loadNews();
   });
 });
+
+// ===== Search =====
+const searchInput = document.getElementById('search-input');
+const searchClear = document.getElementById('search-clear');
+if (searchInput) {
+  searchInput.addEventListener('input', (e) => {
+    state.searchQuery = e.target.value;
+    searchClear.style.display = e.target.value ? 'flex' : 'none';
+    renderAllEvents();
+  });
+}
+if (searchClear) {
+  searchClear.addEventListener('click', () => {
+    searchInput.value = '';
+    state.searchQuery = '';
+    searchClear.style.display = 'none';
+    renderAllEvents();
+    searchInput.focus();
+  });
+}
 
 document.addEventListener('click', (e) => {
   // star toggle
@@ -817,25 +1984,46 @@ document.addEventListener('click', (e) => {
     const id = parseInt(e.target.dataset.id);
     if (state.starred.has(id)) {
       state.starred.delete(id);
-      showToast('已取消收藏');
+      showToast(t('toast_unstarred'));
     } else {
       state.starred.add(id);
-      showToast('⭐ 已加入日程，回归前会提醒你～');
+      showToast(t('toast_starred'));
     }
     renderHome();
     renderAllEvents();
     return;
   }
-  // timezone buttons
-  if (e.target.classList.contains('tz-btn')) {
-    document.querySelectorAll('.tz-btn').forEach(b => b.classList.remove('active'));
-    e.target.classList.add('active');
-    state.currentTz = e.target.dataset.tz;
-    renderHome();
-    renderAllEvents();
-    const zh = { KST: '韩国时间', CST: '中国时间', EST: '美东时间', PST: '美西时间' };
-    showToast('🌍 已切换到 ' + zh[state.currentTz]);
+  // dropdown trigger (toggle open/close)
+  const trigger = e.target.closest('.dd-trigger');
+  if (trigger) {
+    const dd = trigger.closest('.dropdown');
+    const wasOpen = dd.classList.contains('open');
+    document.querySelectorAll('.dropdown.open').forEach(d => d.classList.remove('open'));
+    if (!wasOpen) dd.classList.add('open');
     return;
+  }
+  // dropdown item click — language
+  const langItem = e.target.closest('.dd-item[data-lang]');
+  if (langItem) {
+    state.lang = langItem.dataset.lang;
+    lsSet('kstarhub_lang', state.lang);
+    document.querySelectorAll('.dropdown.open').forEach(d => d.classList.remove('open'));
+    applyLang();
+    showToast(t('toast_lang'));
+    return;
+  }
+  // dropdown item click — timezone
+  const tzItem = e.target.closest('.dd-item[data-tz]');
+  if (tzItem) {
+    state.currentTz = tzItem.dataset.tz;
+    document.querySelectorAll('.dropdown.open').forEach(d => d.classList.remove('open'));
+    applyLang(); // refreshes labels + re-renders events
+    showToast(t('toast_tz_prefix') + I18N[state.lang].tz_long[state.currentTz]);
+    return;
+  }
+  // click outside any dropdown → close all
+  if (!e.target.closest('.dropdown')) {
+    document.querySelectorAll('.dropdown.open').forEach(d => d.classList.remove('open'));
   }
   // type filter chip (calendar page)
   if (e.target.classList.contains('chip') && e.target.dataset.filter) {
@@ -853,28 +2041,96 @@ document.addEventListener('click', (e) => {
     renderGroups();
     return;
   }
-  // group follow
-  const gCard = e.target.closest('.group-card');
-  if (gCard) {
-    const id = gCard.dataset.gid;
+  // modal close (✕ button)
+  if (e.target.id === 'modal-close') {
+    closeGroupModal();
+    return;
+  }
+  // modal follow button (inside modal)
+  if (e.target.id === 'modal-follow') {
+    const id = e.target.dataset.gid;
+    if (!id) return;
     if (state.followed.has(id)) {
       state.followed.delete(id);
-      showToast('已取消关注');
+      showToast(t('toast_unfollowed'));
     } else {
       state.followed.add(id);
-      showToast('💜 已关注，解锁专属贴纸！');
+      showToast(t('toast_followed'));
     }
+    // refresh both modal button + underlying grid
+    const followed = state.followed.has(id);
+    e.target.textContent = followed ? t('follow_yes') : t('follow_no');
+    e.target.classList.toggle('following', followed);
     renderGroups();
+    renderProfile();
+    return;
+  }
+  // click on overlay background → close
+  if (e.target.id === 'group-modal') {
+    closeGroupModal();
+    return;
+  }
+  // group card click → open detail modal
+  const gCard = e.target.closest('.group-card');
+  if (gCard) {
+    openGroupModal(gCard.dataset.gid);
     return;
   }
 });
 
+// Escape key closes modal
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && currentModalGroupId) closeGroupModal();
+});
+
+// ===== i18n apply =====
+function applyLang() {
+  // Update <html lang="">
+  document.documentElement.lang =
+    state.lang === 'zh' ? 'zh-CN'
+    : state.lang === 'ko' ? 'ko'
+    : state.lang === 'es' ? 'es-MX'
+    : 'en';
+  // Update text content
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    el.textContent = t(key);
+  });
+  // Update innerHTML (for keys with bold/HTML)
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.dataset.i18nHtml;
+    el.innerHTML = t(key);
+  });
+  // Update placeholders
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.dataset.i18nPlaceholder;
+    el.placeholder = t(key);
+  });
+  // Update dropdown trigger labels
+  const langNames = { zh: '中文', en: 'English', ko: '한국어', es: 'Español' };
+  const langCur = document.getElementById('lang-current');
+  if (langCur) langCur.textContent = langNames[state.lang] || 'EN';
+  const tzCur = document.getElementById('tz-current');
+  if (tzCur) tzCur.textContent = TZ_LABELS[state.currentTz] || state.currentTz;
+
+  // Update dd-item active states
+  document.querySelectorAll('.dd-item[data-lang]').forEach(it => {
+    it.classList.toggle('active', it.dataset.lang === state.lang);
+  });
+  document.querySelectorAll('.dd-item[data-tz]').forEach(it => {
+    it.classList.toggle('active', it.dataset.tz === state.currentTz);
+  });
+  // Re-render dynamic content
+  renderHome();
+  renderAllEvents();
+  renderGroups();
+  renderHero();
+}
+
 // ===== Init =====
-renderHome();
-renderAllEvents();
-renderGroups();
+applyLang();
 renderProfile();
-updateCountdown();
+loadNews(); // pre-warm so the News tab is instant on first click
 setInterval(updateCountdown, 60000);
 </script>
 
