@@ -1,0 +1,54 @@
+{
+  "generatedAt": "2026-04-21T00:00:00.000Z",
+  "count": 6,
+  "items": [
+    {
+      "source": "seed",
+      "title": "CORTIS first comeback since debut: 2nd EP 'GREENGREEN' drops May 4",
+      "link": "https://kpopofficial.com/album/cortis-greengreen/",
+      "date": "2026-04-20T09:00:00.000Z",
+      "description": "HYBE's 5-member group CORTIS has surpassed 2 million in pre-orders for their 2nd EP GREENGREEN, with pre-release single 'REDRED' out on April 20.",
+      "groups": ["CORTIS"]
+    },
+    {
+      "source": "seed",
+      "title": "BTS 'ARIRANG' World Tour · Tampa dates added",
+      "link": "https://www.billboard.com/music/pop/bts-arirang-tour-tampa/",
+      "date": "2026-04-19T09:00:00.000Z",
+      "description": "BTS confirms 4 nights at Raymond James Stadium in Tampa, FL starting April 25, 2026.",
+      "groups": ["BTS"]
+    },
+    {
+      "source": "seed",
+      "title": "IVE kicks off Asia leg of 'SHOW WHAT I AM' tour in Osaka",
+      "link": "https://www.soompi.com/article/ive-show-what-i-am-osaka/",
+      "date": "2026-04-18T09:00:00.000Z",
+      "description": "IVE plays 2 nights at Osaka-jo Hall before heading to Manila.",
+      "groups": ["IVE"]
+    },
+    {
+      "source": "seed",
+      "title": "LE SSERAFIM announces 'PUREFLOW pt. 1' for May 22",
+      "link": "https://www.soompi.com/article/le-sserafim-pureflow/",
+      "date": "2026-04-15T09:00:00.000Z",
+      "description": "HYBE/SOURCE confirms comeback date for LE SSERAFIM's new single.",
+      "groups": ["LE SSERAFIM"]
+    },
+    {
+      "source": "seed",
+      "title": "aespa's second full album release window narrows to mid-May",
+      "link": "https://www.allkpop.com/article/aespa-second-album-may/",
+      "date": "2026-04-12T09:00:00.000Z",
+      "description": "SM Entertainment teases aespa's highly anticipated 2nd full album.",
+      "groups": ["aespa"]
+    },
+    {
+      "source": "seed",
+      "title": "ENHYPEN 'BLOOD SAGA' Seoul concerts sell out in 4 minutes",
+      "link": "https://www.soompi.com/article/enhypen-blood-saga-seoul/",
+      "date": "2026-04-08T09:00:00.000Z",
+      "description": "All 3 nights at KSPO Dome gone in under 5 minutes; additional São Paulo and Las Vegas dates confirmed.",
+      "groups": ["ENHYPEN"]
+    }
+  ]
+}
